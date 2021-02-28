@@ -1,7 +1,7 @@
 require 'grape'
 
 module GameToken
-  class API < Grape::API
+  class Api < Grape::API
     version 'v1', using: :header, vendor: 'krygate'
     format :json
     prefix :api

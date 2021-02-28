@@ -1,15 +1,12 @@
 require 'rack/test'
-require 'byebug'
 
 require 'spec_helper'
 
-require './src/game_token/api'
-
-describe GameToken::API do
+describe GameToken::Api do
   include Rack::Test::Methods
 
   def app
-    GameToken::API
+    GameToken::Api
   end
 
   context 'GET /api/game_tokens/' do

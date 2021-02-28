@@ -96,3 +96,9 @@ RSpec.configure do |config|
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
 end
+
+require './src/app/app_container'
+require 'zeitwerk'
+loader = Zeitwerk::Loader.for_gem
+loader.push_dir('src')
+loader.setup

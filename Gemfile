@@ -22,4 +22,16 @@ gem 'sorbet', '~> 0.5.6305'
 
 gem 'rack-test', '~> 1.1'
 
-gem "byebug", "~> 11.1"
+gem 'byebug', '~> 11.1'
+
+gem 'dry-auto_inject', '~> 0.7.0'
+
+gem 'dry-container', '~> 0.7.2'
+
+gem 'dry-validation', '~> 1.6'
+
+gem 'dry-struct', '~> 1.4'
+
+gem 'dry-types', '~> 1.5'
+
+gem "zeitwerk", "~> 2.4"
