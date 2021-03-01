@@ -8,7 +8,7 @@ require 'dry/auto_inject'
 module App
   # Class functioning as an dependency injection container
   #
-  # @see Dry::Container::Mixin
+  # @see https://dry-rb.org/gems/dry-auto_inject Dry::Container::Mixin
   class AppContainer
     extend Dry::Container::Mixin
 
@@ -18,7 +18,6 @@ module App
   end
 
   # Sets up the the dry auto inject container
-  # @see Dry::AutoInject
-  # @see https://dry-rb.org/gems/dry-auto_inject
+  # @see https://dry-rb.org/gems/dry-auto_inject Dry::AutoInject
   Import = Dry::AutoInject(AppContainer)
 end
