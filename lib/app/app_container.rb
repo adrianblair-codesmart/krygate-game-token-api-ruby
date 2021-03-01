@@ -17,5 +17,8 @@ module App
     end
   end
 
+  # Sets up the the dry auto inject container
+  # @see Dry::AutoInject
+  # @see https://dry-rb.org/gems/dry-auto_inject
   Import = Dry::AutoInject(AppContainer)
 end

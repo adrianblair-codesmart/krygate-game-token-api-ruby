@@ -1,8 +1,9 @@
 --tag resource:"API resource"
---tag get:"API GET method"
---tag post:"API POST method"
---tag put:"API PUT method"
---tag delete:"API DELETE method"
---tag patch:"API PATCH method"
+--tag mount:"API mount"
+--tag get:"HTTP GET method"
+--tag post:"HTTP POST method"
+--tag put:"HTTP PUT method"
+--tag delete:"HTTP DELETE method"
+--tag patch:"HTTP PATCH method"
 
 lib/**/*.rb
