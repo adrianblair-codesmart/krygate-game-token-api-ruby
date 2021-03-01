@@ -18,8 +18,6 @@ gem 'thin', '~> 1.8'
 
 gem 'yard', '~> 0.9.26'
 
-gem 'sorbet', '~> 0.5.6305'
-
 gem 'rack-test', '~> 1.1'
 
 gem 'byebug', '~> 11.1'
@@ -34,4 +32,4 @@ gem 'dry-struct', '~> 1.4'
 
 gem 'dry-types', '~> 1.5'
 
-gem "zeitwerk", "~> 2.4"
+gem 'zeitwerk', '~> 2.4'
