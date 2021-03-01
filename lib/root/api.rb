@@ -10,7 +10,7 @@ module Root
   # @mount {GameToken::Api} mounts the game token API
   #
   # @see GameToken::Api
-  # @see https://www.rubydoc.info/github/ruby-grape/grape/Grape/API Grape::API documentation
+  # @see https://www.rubydoc.info/github/ruby-grape/grape/Grape/API Grape::API
   class Api < Grape::API
     # @see GameToken::API
     mount GameToken::Api

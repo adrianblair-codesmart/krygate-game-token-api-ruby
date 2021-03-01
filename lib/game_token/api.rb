@@ -11,7 +11,7 @@ module GameToken
   # @get get api/game_tokens/ returns Array<{GameToken::Model GameToken::Model}> as json
   # @get get api/game_tokens/:id returns {GameToken::Model GameToken::Model} as json
   #
-  # @see https://www.rubydoc.info/github/ruby-grape/grape/Grape/API Grape::API documentation
+  # @see https://www.rubydoc.info/github/ruby-grape/grape/Grape/API Grape::API
   class Api < Grape::API
     version 'v1', using: :header, vendor: 'krygate'
     format :json
