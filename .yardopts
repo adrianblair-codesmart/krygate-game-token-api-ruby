@@ -1,0 +1,8 @@
+--tag resource:"API resource"
+--tag get:"API GET method"
+--tag post:"API POST method"
+--tag put:"API PUT method"
+--tag delete:"API DELETE method"
+--tag patch:"API PATCH method"
+
+lib/**/*.rb

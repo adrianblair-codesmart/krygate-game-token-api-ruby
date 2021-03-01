@@ -33,3 +33,7 @@ gem 'dry-struct', '~> 1.4'
 gem 'dry-types', '~> 1.5'
 
 gem 'zeitwerk', '~> 2.4'
+
+gem 'rdoc', '~> 6.3'
+
+gem 'rubocop', '~> 1.11'

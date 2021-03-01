@@ -1,7 +1,9 @@
-require './src/app/app_container'
+# frozen_string_literal: true
+
+require './lib/app/app_container'
 require 'zeitwerk'
 loader = Zeitwerk::Loader.for_gem
-loader.push_dir('src')
+loader.push_dir('lib')
 loader.setup
 
 Root::Api.compile!

@@ -1,6 +1,15 @@
+# frozen_string_literal: true
+
 require 'grape'
 
+# Namespace for game token related modules and classes
+# @author Adrian Blair
 module GameToken
+  # Class representing the game token API
+  #
+  # @see Grape::API
+  # @resource game_tokens "api/game_tokens"
+  # @get "" returns game tokens stored in the data store
   class Api < Grape::API
     version 'v1', using: :header, vendor: 'krygate'
     format :json
