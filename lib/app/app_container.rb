@@ -12,8 +12,8 @@ module App
   class AppContainer
     extend Dry::Container::Mixin
 
-    register 'test_string' do
-      'our nice string...'
+    register 'data_source' do
+      return Data::Google::DatastoreSource.new
     end
   end
 

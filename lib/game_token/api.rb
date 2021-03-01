@@ -22,7 +22,10 @@ module GameToken
       # get {prefix}/game_tokens/ @returns [Array<GameToken::Model>] as json
       desc 'Get all the available game tokens.'
       get do
-        'Hello. This is the Krygate Game Token API.'
+        # makes a call to the data Object
+        # transfer to game token structure
+        # returns JSON
+        'All game tokens'
       end
 
       # get {prefix}/game_tokens/:id @returns [GameToken::Model] as json
@@ -31,7 +34,11 @@ module GameToken
         requires :id, type: String, desc: 'Game Token ID.'
       end
       get ':id' do
-        return "The id you gave is #{params[:id]}."
+        # validate params
+        # makes a call to the data Object
+        # transfer to game token structure
+        # returns JSON
+        "The id you gave is #{params[:id]}."
       end
     end
   end
