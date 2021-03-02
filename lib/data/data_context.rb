@@ -7,11 +7,11 @@ require './lib/app/app_container'
 module Data
   # Base Class representing a data context
   #
-  # @attr_reader [Data::DataSource] data_source the data source the contect will use
+  # @attr_reader [Data::DataSource] data_source the data source the context will use
   class DataContext
     include App::Import['data_source']
 
-    # @param [Data::DataSource] data_source the data source the contect will use
+    # @param [Data::DataSource] data_source the data source the context will use
     #
     # @see https://dry-rb.org/gems/dry-auto_inject/0.6/how-does-it-work/ dry-auto_inject
     def initialize(data_source: nil)
