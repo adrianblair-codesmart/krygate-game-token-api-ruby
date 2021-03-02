@@ -17,7 +17,7 @@ module Data
       @data_source = data_source
     end
 
-    # Finds an entity by key or by a combination of kind and id or name.
+    # Finds an entity by key or by a combination of kind and id or name
     # - the key being an object containing all the necessary data e.g. the kind and indentifier
     # - the kind being a string representing the kind or table name
     # - the id or name being a string which represents an identifier
@@ -29,22 +29,51 @@ module Data
       @data_source.find(key_or_kind, id_or_name)
     end
 
+    # Returns a query object for a certain kind from a data source
+    # - the kind being a string representing the kind or table name
+    # - the query object will have to be run to retrieve the results
+    # - the query object acts like a builder object
+    #
+    # @param kind [String] the kind a query should perform it's lookup on
+    # @return [Object]
     def query(kind)
       @data_source.query(kind)
     end
 
+    # Inserts entities into a data source
+    # - the entities must not already exist
+    #
+    # @param *entities [Object] one or more objects to insert.
+    # @return [Object] returns the entities inserted successfully
     def insert(*entities)
       @data_source.insert(*entities)
     end
 
+    # Updates entities in a data source
+    # - the entities must already exist
+    #
+    # @param *entities [Object] one or more objects to update.
+    # @return [Object] returns the entities updated successfully
     def update(*entities)
       @data_source.update(*entities)
     end
 
+    # Saves entities in a data source
+    # - an insert will be performed if the entities don't exist
+    # - an update will be performed if the entities already exist
+    # - also known as an upsert
+    #
+    # @param *entities [Object] one or more objects to save.
+    # @return [Object] returns the entities saved successfully
     def save(*entities)
       @data_source.save(*entities)
     end
 
+    # Deletes entities from a data source
+    # - the entities themselves can be passed or just the keys of the entities
+    #
+    # @param *entities_or_keys [Object] one or more objects to delete.
+    # @return [true] returns true if the entities were deleted successfully
     def delete(*entities_or_keys)
       @data_source.delete(*entities_or_keys)
     end
