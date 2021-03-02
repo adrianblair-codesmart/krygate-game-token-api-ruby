@@ -7,9 +7,12 @@ require './lib/app/app_container'
 module Data
   # Base Class representing a data context
   #
+  # @attr_reader [Data::DataSource] data_source the data source the contect will use
   class DataContext
     include App::Import['data_source']
 
+    # @param [Data::DataSource] data_source the data source the contect will use
+    #
     # @see https://dry-rb.org/gems/dry-auto_inject/0.6/how-does-it-work/ dry-auto_inject
     def initialize(data_source: nil)
       super()
@@ -35,7 +38,7 @@ module Data
     # - the query object acts like a builder object
     #
     # @param kind [String] the kind a query should perform it's lookup on
-    # @return [Object]
+    # @return [Object] the query object acts like a builder object
     def query(kind)
       @data_source.query(kind)
     end
