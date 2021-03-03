@@ -37,3 +37,5 @@ gem 'zeitwerk', '~> 2.4'
 gem 'rdoc', '~> 6.3'
 
 gem 'rubocop', '~> 1.11'
+
+gem 'simplecov', '~> 0.21.2'
