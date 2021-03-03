@@ -7,7 +7,7 @@ require 'dry/auto_inject'
 # Namespace for app related modules and classes
 # @author Adrian Blair
 module App
-  # Singleton Class functioning as an dependency injection container
+  # Singleton Class functioning as a dependency injection container
   #
   # includes {https://docs.ruby-lang.org/en/3.0.0/Singleton.html Singleton}
   # includes {https://dry-rb.org/gems/dry-auto_inject Dry::Container::Mixin}

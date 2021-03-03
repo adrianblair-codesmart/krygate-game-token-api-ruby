@@ -1,19 +1,40 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'singleton'
 require 'byebug'
 
-class ContainerObject
-  include Dry::Container::Mixin
-end
-
 describe App::AppContainer do
-  context 'test' do
-    it 'should allow me to do this' do
-      app_container = App::AppContainer.instance
+  before(:all) do
+    @app_container = App::AppContainer.instance
+  end
+
+  context 'App::AppContainer#instance' do
+    it 'should return the app container singleton instance' do
+      expect(App::AppContainer.instance).to be_a(App::AppContainer)
+    end
+  end
+
+  context 'App::AppContainer#register' do
+    it 'should register a dependency into the container' do
+      test_object = 'test_dependency'
+
+      @app_container.register(:test_dependency, test_object)
+
+      @app_container.key?(:test_dependency)
+    end
+  end
+
+  context 'App::AppContainer#resolve' do
+    it 'should resolve a dependency from the container' do
+      test_object = 'test_dependency'
+      expect(@app_container.resolve(:test_dependency)).to equal(test_object)
+    end
+  end
+
+  context 'App::AppContainer contains a data source' do
+    it 'should resolve a dependency from the container' do
+      expect(@app_container.resolve(:data_source)).to be_kind_of(Data::DataSource)
     end
   end
 end
-
-# we need it to respond to :[], register, resolve
-# test that registering and resolving works
