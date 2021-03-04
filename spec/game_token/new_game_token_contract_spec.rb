@@ -7,7 +7,7 @@ describe GameToken::NewGameTokenContract do
     @params = {
       id: "token's id",
       token_name: "token's name",
-      token_key: "token's key",
+      token_key: 'abc123',
       token_domains: ['localhost']
     }
 
