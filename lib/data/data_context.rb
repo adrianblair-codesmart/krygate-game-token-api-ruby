@@ -15,8 +15,6 @@ module Data
     #
     # @see https://dry-rb.org/gems/dry-auto_inject/0.6/how-does-it-work/ dry-auto_inject
     def initialize(data_source: nil)
-      super()
-
       @data_source = data_source
     end
 
