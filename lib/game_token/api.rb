@@ -28,17 +28,19 @@ module GameToken
         'All game tokens'
       end
 
-      # get {prefix}/game_tokens/:id @returns [GameToken::Model] as json
-      desc 'Get a game token by id.'
-      params do
-        requires :id, type: String, desc: 'Game Token ID.'
-      end
-      get ':id' do
-        # validate params
-        # makes a call to the data Object
-        # transfer to game token structure
-        # returns JSON
-        "The id you gave is #{params[:id]}."
+      route_param :id, type: String do
+        # get {prefix}/game_tokens/:id @returns [GameToken::Model] as json
+        desc 'Get a game token by id.'
+        params do
+        end
+        get do
+          # validate params
+          # makes a call to the data Object
+          # transfer to game token structure
+          # returns JSON
+          "The id you gave is #{params[:id]}."
+          params
+        end
       end
     end
   end

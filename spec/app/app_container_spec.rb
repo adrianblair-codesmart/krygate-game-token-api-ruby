@@ -9,13 +9,13 @@ describe App::AppContainer do
     @app_container = App::AppContainer.instance
   end
 
-  context 'App::AppContainer#instance' do
+  context 'when the instance method is called' do
     it 'should return the app container singleton instance' do
       expect(App::AppContainer.instance).to be_a(App::AppContainer)
     end
   end
 
-  context 'App::AppContainer#register' do
+  context 'when the register method is called' do
     it 'should register a dependency into the container' do
       test_object = 'test_dependency'
 
@@ -25,14 +25,14 @@ describe App::AppContainer do
     end
   end
 
-  context 'App::AppContainer#resolve' do
+  context 'when the resolve method is called' do
     it 'should resolve a dependency from the container' do
       test_object = 'test_dependency'
       expect(@app_container.resolve(:test_dependency)).to equal(test_object)
     end
   end
 
-  context 'App::AppContainer contains a data source' do
+  context 'the container contains a data source' do
     it 'should resolve a dependency from the container' do
       expect(@app_container.resolve(:data_source)).to be_kind_of(Data::DataSource)
     end

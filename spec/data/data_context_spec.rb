@@ -22,7 +22,7 @@ describe Data::DataContext do
     end
   end
 
-  context 'DataContext::find' do
+  context 'when the find method is called' do
     it 'calls find on the data_source and returns the entity with the matching id' do
       expect(@mock).to receive(:find).with(@test_kind, @test_id).and_return(@test_return_entity)
 
@@ -33,7 +33,7 @@ describe Data::DataContext do
     end
   end
 
-  context 'DataContext::query' do
+  context 'when the query method is called' do
     it 'calls query on the data_source and returns a query object' do
       expect(@mock).to receive(:query).with(@test_kind).and_return(@test_return_entity)
 
@@ -44,7 +44,7 @@ describe Data::DataContext do
     end
   end
 
-  context 'DataContext::insert' do
+  context 'when the insert method is called' do
     it 'calls insert on the data_source and returns an entity object' do
       expect(@mock).to receive(:insert).with(@test_entity).and_return(@test_return_entity)
 
@@ -55,7 +55,7 @@ describe Data::DataContext do
     end
   end
 
-  context 'DataContext::update' do
+  context 'when the update method is called' do
     it 'calls update on the data_source and returns an entity object' do
       expect(@mock).to receive(:update).with(@test_entity).and_return(@test_return_entity)
 
@@ -66,7 +66,7 @@ describe Data::DataContext do
     end
   end
 
-  context 'DataContext::save' do
+  context 'when the save method is called' do
     it 'calls save on the data_source and returns an entity object' do
       expect(@mock).to receive(:save).with(@test_entity).and_return(@test_return_entity)
 
@@ -77,7 +77,7 @@ describe Data::DataContext do
     end
   end
 
-  context 'DataContext::delete' do
+  context 'when the delete method is called' do
     it 'calls delete on the data_source and returns true' do
       expect(@mock).to receive(:delete).with(@test_id).and_return(true)
 

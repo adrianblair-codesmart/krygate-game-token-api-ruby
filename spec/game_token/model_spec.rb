@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'byebug'
 
 describe GameToken::Model do
   before(:all) do
@@ -13,25 +12,25 @@ describe GameToken::Model do
     )
   end
 
-  context 'the model has an id attribute' do
+  context 'when the model has an id attribute' do
     it 'returns the current id' do
       expect(@model.id).to eql("token's id")
     end
   end
 
-  context 'the model has a token name attribute' do
+  context 'when the model has a token name attribute' do
     it 'returns the current token name' do
       expect(@model.token_name).to eql("token's name")
     end
   end
 
-  context 'the model has a token key attribute' do
+  context 'when the model has a token key attribute' do
     it 'returns the current token key' do
       expect(@model.token_key).to eql("token's key")
     end
   end
 
-  context 'the model has a token domains attribute' do
+  context 'when the model has a token domains attribute' do
     it 'returns the current token domains' do
       expect(@model.token_domains).to include('localhost')
     end
