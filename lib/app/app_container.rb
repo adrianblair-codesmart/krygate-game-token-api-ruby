@@ -3,6 +3,7 @@
 require 'singleton'
 require 'dry/container'
 require 'dry/auto_inject'
+require 'google/cloud/datastore'
 
 # Namespace for app related modules and classes
 # @author Adrian Blair
@@ -16,6 +17,13 @@ module App
   class AppContainer
     include Singleton
     include Dry::Container::Mixin
+
+    instance.register :data_store do
+      Google::Cloud::Datastore.new(
+        project_id: 'krydev-game-api',
+        credentials: '/home/adrian/krydev-game-api-a637b5dce352.json'
+      )
+    end
 
     instance.register :data_source do
       Data::Google::DatastoreSource.new
