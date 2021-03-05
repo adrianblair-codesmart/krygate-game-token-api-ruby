@@ -22,13 +22,13 @@ module Data
       end
 
       # Finds an entity by key or by a combination of kind and id or name
-      # - the key being an object containing all the necessary data e.g. the kind and indentifier
+      # - the key being an hash containing all the necessary data e.g. the kind and indentifier
       # - the kind being a string representing the kind or table name
       # - the id or name being a string which represents an identifier
       #
-      # @param key_or_kind [Object | String] an indentifier for an entity or kind
+      # @param key_or_kind [Hash | String] an indentifier for an entity or kind
       # @param id_or_name [String] an identifying key represented as an id or name
-      # @return [Object | nil] returns an entity Object or nil if not found
+      # @return [Hash | nil] returns an entity Object or nil if not found
       def find(key_or_kind, id_or_name = nil)
         @data_store.find(key_or_kind, id_or_name)
       end
@@ -47,8 +47,8 @@ module Data
       # Inserts entities into a data store
       # - the entities must not already exist
       #
-      # @param *entities [Object] one or more objects to insert.
-      # @return [Object] returns the entities inserted successfully
+      # @param *entities [Hash] one or more objects to insert.
+      # @return [Hash] returns the entities inserted successfully
       def insert(*entities)
         @data_store.insert(*entities)
       end
@@ -56,8 +56,8 @@ module Data
       # Updates entities in a data store
       # - the entities must already exist
       #
-      # @param *entities [Object] one or more objects to update.
-      # @return [Object] returns the entities updated successfully
+      # @param *entities [Hash] one or more objects to update.
+      # @return [Hash] returns the entities updated successfully
       def update(*entities)
         @data_store.update(*entities)
       end
@@ -67,8 +67,8 @@ module Data
       # - an update will be performed if the entities already exist
       # - also known as an upsert
       #
-      # @param *entities [Object] one or more objects to save.
-      # @return [Object] returns the entities saved successfully
+      # @param *entities [Hash] one or more objects to save.
+      # @return [Hash] returns the entities saved successfully
       def save(*entities)
         @data_store.save(*entities)
       end
@@ -76,7 +76,7 @@ module Data
       # Deletes entities from a data store
       # - the entities themselves can be passed or just the keys of the entities
       #
-      # @param *entities_or_keys [Object] one or more objects to delete.
+      # @param *entities_or_keys [Hash] one or more objects to delete.
       # @return [true] returns true if the entities were deleted successfully
       def delete(*entities_or_keys)
         @data_store.delete(*entities_or_keys)
@@ -84,3 +84,7 @@ module Data
     end
   end
 end
+
+# ideas:
+# Say the fuctions take an entity as a hash or an array of hashes?
+# We then need to convert that hash to a specific entity along with a key.
