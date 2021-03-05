@@ -7,9 +7,18 @@ require 'dry-validation'
 module GameToken
   # A contract validating data in a new game token
   #
-  # - required [String] token_name holds the name of the game token
-  # - required [String] token_key holds the key of the game token
-  # - optional [Array<String>] token_domains an array of domains of which the game token validates against
+  # - params include:
+  #     params do
+  #       required(:token_name).filled(:string)
+  #       required(:token_key).filled(:string)
+  #       optional(:token_domains).array(:string)
+  #     end
+  # - rules include:
+  #     rule(:token_key).validate(:no_blank_spaces_format)
+  #     rule(:token_domains).validate(:only_unique_array_values)
+  #     rule(:token_domains).each do
+  #       key.failure('cannot contain any blank spaces') if value.match(' ')
+  #     end
   # @see https://dry-rb.org/gems/dry-validation Dry::Validation
   class NewGameTokenContract < GameToken::BaseGameTokenContract
     params do
