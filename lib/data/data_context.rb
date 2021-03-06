@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require './lib/app/app_container'
-require 'byebug'
 
 # Namespace for data related modules and classes
 # @author Adrian Blair

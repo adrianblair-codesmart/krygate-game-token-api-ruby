@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 require 'google/cloud/datastore'
-require 'byebug'
 
 describe Data::Google::DatastoreSource do
   before(:each) do

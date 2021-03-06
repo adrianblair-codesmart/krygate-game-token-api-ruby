@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 require 'singleton'
-require 'byebug'
 
 describe App::AppContainer do
   before(:all) do
