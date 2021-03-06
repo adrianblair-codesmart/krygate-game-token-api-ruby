@@ -26,9 +26,9 @@ module Data
       # - the kind being a string representing the kind or table name
       # - the id or name being a string which represents an identifier
       #
-      # @param key_or_kind [Hash | String] an indentifier for an entity or kind
+      # @param key_or_kind [Hash, String] an indentifier for an entity or kind
       # @param id_or_name [String] an identifying key represented as an id or name
-      # @return [Hash | nil] returns an entity Object or nil if not found
+      # @return [Hash, nil] returns an entity Object or nil if not found
       def find(key_or_kind, id_or_name = nil)
         @data_store.find(key_or_kind, id_or_name)
       end
@@ -84,7 +84,3 @@ module Data
     end
   end
 end
-
-# ideas:
-# Say the fuctions take an entity as a hash or an array of hashes?
-# We then need to convert that hash to a specific entity along with a key.

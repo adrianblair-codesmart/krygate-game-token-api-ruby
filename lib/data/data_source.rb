@@ -13,9 +13,9 @@ module Data
     # - the kind being a string representing the kind or table name
     # - the id or name being a string which represents an identifier
     #
-    # @param key_or_kind [Hash | String] an indentifier for an entity or kind
+    # @param key_or_kind [Hash, String] an indentifier for an entity or kind
     # @param id_or_name [String] an identifying key represented as an id or name
-    # @return [Hash | nil] returns an entity Object or nil if not found
+    # @return [Hash, nil] returns an entity Object or nil if not found
     def find(key_or_kind, id_or_name = nil); end
 
     # Returns a query object for a certain kind from a data store

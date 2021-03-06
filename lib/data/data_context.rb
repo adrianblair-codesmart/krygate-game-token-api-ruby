@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require './lib/app/app_container'
+require 'byebug'
 
 # Namespace for data related modules and classes
 # @author Adrian Blair
@@ -23,9 +24,9 @@ module Data
     # - the kind being a string representing the kind or table name
     # - the id or name being a string which represents an identifier
     #
-    # @param key_or_kind [Object | String] an indentifier for an entity or kind
+    # @param key_or_kind [Object, String] an indentifier for an entity or kind
     # @param id_or_name [String] an identifying key represented as an id or name
-    # @return [Object | nil] returns an entity Object or nil if not found
+    # @return [Object, nil] returns an entity Object or nil if not found
     def find(key_or_kind, id_or_name = nil)
       @data_source.find(key_or_kind, id_or_name)
     end
@@ -44,19 +45,19 @@ module Data
     # Inserts entities into a data source
     # - the entities must not already exist
     #
-    # @param *entities [Object] one or more objects to insert.
+    # @param entities [#to_h] one or more objects which can be converted to hashes
     # @return [Object] returns the entities inserted successfully
     def insert(*entities)
-      @data_source.insert(*entities)
+      @data_source.insert(convert_entites_to_hash(entities))
     end
 
     # Updates entities in a data source
     # - the entities must already exist
     #
-    # @param *entities [Object] one or more objects to update.
+    # @param entities [#to_h] one or more objects which can be converted to hashes
     # @return [Object] returns the entities updated successfully
     def update(*entities)
-      @data_source.update(*entities)
+      @data_source.update(convert_entites_to_hash(entities))
     end
 
     # Saves entities in a data source
@@ -64,19 +65,33 @@ module Data
     # - an update will be performed if the entities already exist
     # - also known as an upsert
     #
-    # @param *entities [Object] one or more objects to save.
+    # @param entities [#to_h] one or more objects which can be converted to hashes
     # @return [Object] returns the entities saved successfully
     def save(*entities)
-      @data_source.save(*entities)
+      @data_source.save(convert_entites_to_hash(entities))
     end
 
     # Deletes entities from a data source
     # - the entities themselves can be passed or just the keys of the entities
     #
-    # @param *entities_or_keys [Object] one or more objects to delete.
+    # @param entities [#to_h] one or more objects which can be converted to hashes
     # @return [true] returns true if the entities were deleted successfully
-    def delete(*entities_or_keys)
-      @data_source.delete(*entities_or_keys)
+    def delete(*entities)
+      @data_source.delete(convert_entites_to_hash(entities))
+    end
+
+    # Convert entities to hashes
+    #
+    # @param entities [#to_h] one or more objects which can be converted to hashes
+    # @return [Array<Hash>] returns an array of hashes which represent the entities
+    def convert_entites_to_hash(*entities)
+      entities.flatten!
+
+      entities.map! do |entity|
+        raise TypeError, "#{entity.inspect} cannot be converted to a hash." unless entity.respond_to? :to_h
+
+        entity.to_h
+      end
     end
   end
 end
