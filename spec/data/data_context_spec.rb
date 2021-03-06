@@ -98,4 +98,10 @@ describe Data::DataContext do
       expect(return_value).to be_eql(@test_return_array)
     end
   end
+
+  context 'when the convert_entites_to_hash method is called with an object not supporting to_h' do
+    it 'throws a TypeError' do
+      expect { @data_context.convert_entites_to_hash(@test_id) }.to raise_error TypeError
+    end
+  end
 end
