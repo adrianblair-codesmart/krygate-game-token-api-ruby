@@ -45,7 +45,7 @@ module Data
     # - the entities must not already exist
     #
     # @param entities [#to_h] one or more objects which can be converted to hashes
-    # @return [Object] returns the entities inserted successfully
+    # @return [Array<Hash>] returns the entities inserted successfully
     def insert(*entities)
       @data_source.insert(convert_entites_to_hash(entities))
     end
@@ -54,7 +54,7 @@ module Data
     # - the entities must already exist
     #
     # @param entities [#to_h] one or more objects which can be converted to hashes
-    # @return [Object] returns the entities updated successfully
+    # @return [Array<Hash>] returns the entities updated successfully
     def update(*entities)
       @data_source.update(convert_entites_to_hash(entities))
     end
@@ -65,7 +65,7 @@ module Data
     # - also known as an upsert
     #
     # @param entities [#to_h] one or more objects which can be converted to hashes
-    # @return [Object] returns the entities saved successfully
+    # @return [Array<Hash>] returns the entities saved successfully
     def save(*entities)
       @data_source.save(convert_entites_to_hash(entities))
     end

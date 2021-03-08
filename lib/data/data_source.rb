@@ -30,31 +30,31 @@ module Data
     # Inserts entities into a data store
     # - the entities must not already exist
     #
-    # @param *entities [Hash] one or more objects to insert.
-    # @return [Hash] returns the entities inserted successfully
-    def insert(*entities); end
+    # @param entities [Array<Hash>] one or more objects to insert.
+    # @return [Array<Hash>] returns the entities inserted successfully
+    def insert(entities); end
 
     # Updates entities in a data store
     # - the entities must already exist
     #
-    # @param *entities [Hash] one or more objects to update.
-    # @return [Hash] returns the entities updated successfully
-    def update(*entities); end
+    # @param entities [Array<Hash>] one or more objects to update.
+    # @return [Array<Hash>] returns the entities updated successfully
+    def update(entities); end
 
     # Saves entities in a data store
     # - an insert will be performed if the entities don't exist
     # - an update will be performed if the entities already exist
     # - also known as an upsert
     #
-    # @param *entities [Hash] one or more objects to save.
-    # @return [Hash] returns the entities saved successfully
-    def save(*entities); end
+    # @param entities [Array<Hash>] one or more objects to save.
+    # @return [Array<Hash>] returns the entities saved successfully
+    def save(entities); end
 
     # Deletes entities from a data store
     # - the entities themselves can be passed or just the keys of the entities
     #
-    # @param *entities_or_keys [Hash] one or more objects to delete.
+    # @param entities [Array<Hash>] one or more objects to delete.
     # @return [true] returns true if the entities were deleted successfully
-    def delete(*entities_or_keys); end
+    def delete(entities); end
   end
 end
