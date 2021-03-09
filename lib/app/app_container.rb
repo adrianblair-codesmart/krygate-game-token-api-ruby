@@ -28,6 +28,10 @@ module App
     instance.register :data_source do
       Data::Google::DatastoreSource.new
     end
+
+    instance.register :data_source_parser do
+      Data::Google::DataSourceParser.new
+    end
   end
 
   # Sets up the the dry auto inject container
