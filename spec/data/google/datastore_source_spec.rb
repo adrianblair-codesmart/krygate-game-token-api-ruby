@@ -12,7 +12,7 @@ describe Data::Google::DatastoreSource do
     @test_return_array = [{}]
 
     @test_params = {
-      ds_identifier: 'token_id',
+      ds_identifier: :id,
       ds_kind: 'GameToken',
       id: 'token_id',
       token_name: "token's name",
