@@ -32,6 +32,10 @@ module App
     instance.register :data_source_parser do
       Data::Google::DataSourceParser.new
     end
+
+    instance.register :game_token_dao do
+      GameToken::DataAccessObject.new
+    end
   end
 
   # Sets up the the dry auto inject container

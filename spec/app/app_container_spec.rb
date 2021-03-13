@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'singleton'
+require './lib/game_token/data_access_object'
 
 describe App::AppContainer do
   before(:all) do
@@ -34,6 +34,18 @@ describe App::AppContainer do
   context 'the container contains a data source' do
     it 'should resolve a dependency from the container' do
       expect(@app_container.resolve(:data_source)).to be_kind_of(Data::DataSource)
+    end
+  end
+
+  context 'the container contains a data source parser' do
+    it 'should resolve a dependency from the container' do
+      expect(@app_container.resolve(:data_source_parser)).to be_kind_of(Data::DataSourceParser)
+    end
+  end
+
+  context 'the container contains a game token dao' do
+    it 'should resolve a dependency from the container' do
+      expect(@app_container.resolve(:game_token_dao)).to be_kind_of(GameToken::DataAccessObject)
     end
   end
 end
