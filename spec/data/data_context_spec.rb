@@ -45,6 +45,17 @@ describe Data::DataContext do
     end
   end
 
+  context 'when the run method is called' do
+    it 'runs the query on the data_source and returns a query result object' do
+      expect(@mock).to receive(:run).with(@test_entity).and_return(@test_return_entity)
+
+      return_value = @data_context.run(@test_entity)
+
+      expect(@data_context).to respond_to(:run)
+      expect(return_value).to equal(@test_return_entity)
+    end
+  end
+
   context 'when the insert method is called' do
     it 'calls insert on the data_source and returns an entity object' do
       expect(@mock).to receive(:insert).with(@test_return_array).and_return(@test_return_array)

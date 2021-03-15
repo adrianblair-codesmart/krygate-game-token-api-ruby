@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'google/cloud/datastore'
+require 'byebug'
 
 # Namespace for data related modules and classes
 # @author Adrian Blair
@@ -34,7 +35,8 @@ module Data
       # @param id_or_name [String] an identifying key represented as an id or name
       # @return [Hash, nil] returns an entity Object or nil if not found
       def find(key_or_kind, id_or_name = nil)
-        @data_store.find(key_or_kind, id_or_name)
+        value = @data_store.find(key_or_kind, id_or_name)
+        @data_source_parser.entity_to_hash(value)
       end
 
       # Returns a query object for a certain kind from a data store
@@ -48,13 +50,23 @@ module Data
         @data_store.query(kind)
       end
 
+      # Runs a query object on a data source
+      #
+      # @param query [Object] the query to be run on the data source
+      # @return [Array<Hash>] returns the queried entities
+      def run(query)
+        value = @data_store.run(query)
+        @data_source_parser.entities_to_hashes(value)
+      end
+
       # Inserts entities into a data store
       # - the entities must not already exist
       #
       # @param entities [Array<Hash>] one or more objects to insert.
       # @return [Array<Hash>] returns the entities inserted successfully
       def insert(entities)
-        @data_store.insert(entities)
+        value = @data_store.insert(@data_source_parser.hashes_to_entities(entities))
+        @data_source_parser.entities_to_hashes(value)
       end
 
       # Updates entities in a data store
@@ -63,7 +75,8 @@ module Data
       # @param entities [Array<Hash>] one or more objects to update.
       # @return [Array<Hash>] returns the entities updated successfully
       def update(entities)
-        @data_store.update(entities)
+        value = @data_store.update(@data_source_parser.hashes_to_entities(entities))
+        @data_source_parser.entities_to_hashes(value)
       end
 
       # Saves entities in a data store
@@ -74,7 +87,8 @@ module Data
       # @param entities [Array<Hash>] one or more objects to save.
       # @return [Array<Hash>] returns the entities saved successfully
       def save(entities)
-        @data_store.save(entities)
+        value = @data_store.save(@data_source_parser.hashes_to_entities(entities))
+        @data_source_parser.entities_to_hashes(value)
       end
 
       # Deletes entities from a data store
@@ -83,7 +97,8 @@ module Data
       # @param entities [Array<Hash>] one or more objects to delete.
       # @return [true] returns true if the entities were deleted successfully
       def delete(entities)
-        @data_store.delete(entities)
+        value = @data_store.delete(@data_source_parser.hashes_to_entities(entities))
+        @data_source_parser.entities_to_hashes(value)
       end
     end
   end

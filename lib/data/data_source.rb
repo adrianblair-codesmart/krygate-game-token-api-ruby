@@ -27,6 +27,12 @@ module Data
     # @return [Object] the query object acts like a builder object
     def query(kind); end
 
+    # Runs a query object on a data source
+    #
+    # @param query [Object] the query to be run on the data source
+    # @return [Object] the query result object
+    def run(query); end
+
     # Inserts entities into a data store
     # - the entities must not already exist
     #

@@ -17,7 +17,7 @@ module Data
     end
 
     # Finds an entity by key or by a combination of kind and id or name
-    # - the key being an object containing all the necessary data e.g. the kind and indentifier
+    # - the key being an object containing all the necessary data e.g. the kind and identifier
     # - the kind being a string representing the kind or table name
     # - the id or name being a string which represents an identifier
     #
@@ -37,6 +37,14 @@ module Data
     # @return [Object] the query object acts like a builder object
     def query(kind)
       @data_source.query(kind)
+    end
+
+    # Runs a query object on a data source
+    #
+    # @param query [Object] the query to be run on the data source
+    # @return [Object] the query result object
+    def run(query)
+      @data_source.run(query)
     end
 
     # Inserts entities into a data source

@@ -24,7 +24,6 @@ module Data
     # - the kind being a string representing the kind or table name
     # - the id or name being a string which represents an identifier
     #
-    # @param key_or_kind [Object, String] an indentifier for an entity or kind
     # @param id_or_name [String] an identifying key represented as an id or name
     # @return [Object, nil] returns an entity Object or nil if not found
     def find(id_or_name = nil)
@@ -36,7 +35,6 @@ module Data
     # - the query object will have to be run to retrieve the results
     # - the query object acts like a builder object
     #
-    # @param kind [String] the kind a query should perform it's lookup on
     # @return [Object] the query object acts like a builder object
     def query
       @data_source.query(@data_kind)
