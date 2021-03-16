@@ -41,10 +41,10 @@ module Data
       # @return [Hash] returns the converted entity as a hash
       # @see https://googleapis.dev/ruby/google-cloud-datastore/latest/Google/Cloud/Datastore/Entity.html Google::Cloud::Datastore::Entity
       def entity_to_hash(item)
+        byebug
         item_hash = item.properties.to_h
-        item_hash[:ds_kind] = item.key.kind
-        item_hash[:ds_identifier] = item.key.name
-        item_hash[:id] = item.key.name
+        #item_hash[:ds_kind] = item.key.kind
+        item_hash[:id] = item.key.id
         item_hash
       end
 
