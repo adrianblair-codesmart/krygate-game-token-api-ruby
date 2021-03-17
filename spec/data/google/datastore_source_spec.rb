@@ -4,108 +4,96 @@ require 'spec_helper'
 require 'google/cloud/datastore'
 
 describe Data::Google::DatastoreSource do
-  before(:each) do
-    @test_kind = 'test_kind'
-    @test_id = 'test_id'
-    @test_return_array = [{}]
+  let(:test_entity_array) { create_game_token_entity_array }
+  let(:test_hash_array) { create_game_token_hash_array }
+  let(:game_token_full_hash) { build(:game_token_full_hash) }
+  let(:game_token_base_hash) { build(:game_token_base_hash) }
+  let(:entity_mock) { create_entity_mock(game_token_base_hash, game_token_full_hash) }
+  let(:test_id) { game_token_full_hash[game_token_full_hash[:ds_identifier]] }
+  let(:test_kind) { game_token_full_hash[:ds_kind] }
+  let(:data_store_mock) { double(Google::Cloud::Datastore) }
 
-    @test_params = {
-      ds_identifier: :id,
-      ds_kind: 'GameToken',
-      id: 'token_id',
-      token_name: "token's name",
-      token_key: 'abc123',
-      token_domains: ['localhost']
-    }
-
-    @test_entity = double(Google::Cloud::Datastore::Entity)
-    allow(@test_entity).to receive(:properties).and_return({})
-    
-    entity_key_mock = double
-    allow(entity_key_mock).to receive(:kind).and_return(@test_params[:ds_kind])
-    allow(entity_key_mock).to receive(:id).and_return(@test_params[@test_params[:ds_identifier]])
-
-    entity_properties_mock = double
-    allow(entity_properties_mock).to receive(:to_h).and_return(entity_hash)
-
-    allow(entity_mock).to receive(:properties).and_return(entity_properties_mock)
-    allow(entity_mock).to receive(:key).and_return(entity_key_mock)
-
-    @test_model = GameToken::Model.new(@test_params)
-
-    @data_store_mock = double(Google::Cloud::Datastore)
-    @data_source = Data::Google::DatastoreSource.new(data_store: @data_store_mock)
+  let(:data_source_parser) do
+    create_data_source_parser_mock(
+      entity_mock: entity_mock,
+      test_entity_array: test_entity_array,
+      game_token_base_hash: game_token_base_hash,
+      test_hash_array: test_hash_array)
   end
+
+  let(:data_source) { Data::Google::DatastoreSource.new(data_store: data_store_mock, data_source_parser: data_source_parser) }
 
   context 'when the data source is constructed' do
     it 'should store the data source as an instance variable' do
-      expect(@data_source).to respond_to(:data_store)
-      expect(@data_source.data_store).to be(@data_store_mock)
+      expect(data_source).to respond_to(:data_store)
+      expect(data_source.data_store).to be(data_store_mock)
     end
   end
 
   context 'when the find method is called' do
     it 'calls find on the data_source and returns the entity with the matching id' do
-      expect(@data_store_mock).to receive(:find).with(@test_kind, @test_id).and_return(@test_entity)
+      expect(data_store_mock).to receive(:find).with(test_kind, test_id).and_return(entity_mock)
 
-      return_value = @data_source.find(@test_kind, @test_id)
+      return_value = data_source.find(test_kind, test_id)
 
-      expect(@data_source).to respond_to(:find)
-      expect(return_value).to equal(@test_entity)
+      expect(data_source).to respond_to(:find)
+      expect(return_value).to equal(game_token_base_hash)
     end
   end
 
   context 'when the query method is called' do
+    let(:query_mock) { instance_double(Google::Datastore::Query) }
+
     it 'calls query on the data_source and returns a query object' do
-      expect(@data_store_mock).to receive(:query).with(@test_kind).and_return(@test_return_array)
+      expect(data_store_mock).to receive(:query).with(test_kind).and_return(query_mock)
 
-      return_value = @data_source.query(@test_kind)
+      return_value = data_source.query(test_kind)
 
-      expect(@data_source).to respond_to(:query)
-      expect(return_value).to equal(@test_return_array)
+      expect(data_source).to respond_to(:query)
+      expect(return_value).to equal(query_mock)
     end
   end
 
   context 'when the insert method is called' do
     it 'calls insert on the data_source and returns an entity object' do
-      expect(@data_store_mock).to receive(:insert).with(@test_return_array).and_return(@test_return_array)
+      expect(data_store_mock).to receive(:insert).with(test_entity_array).and_return(test_entity_array)
 
-      return_value = @data_source.insert(@test_return_array)
+      return_value = data_source.insert(test_hash_array)
 
-      expect(@data_source).to respond_to(:insert)
-      expect(return_value).to equal(@test_return_array)
+      expect(data_source).to respond_to(:insert)
+      expect(return_value).to equal(test_hash_array)
     end
   end
 
   context 'when the update method is called' do
     it 'calls update on the data_source and returns an entity object' do
-      expect(@data_store_mock).to receive(:update).with(@test_return_array).and_return(@test_return_array)
+      expect(data_store_mock).to receive(:update).with(test_entity_array).and_return(test_entity_array)
 
-      return_value = @data_source.update(@test_return_array)
+      return_value = data_source.update(test_hash_array)
 
-      expect(@data_source).to respond_to(:update)
-      expect(return_value).to equal(@test_return_array)
+      expect(data_source).to respond_to(:update)
+      expect(return_value).to equal(test_hash_array)
     end
   end
 
   context 'when the save method is called' do
     it 'calls save on the data_source and returns an entity object' do
-      expect(@data_store_mock).to receive(:save).with(@test_return_array).and_return(@test_return_array)
+      expect(data_store_mock).to receive(:save).with(test_entity_array).and_return(test_entity_array)
 
-      return_value = @data_source.save(@test_return_array)
+      return_value = data_source.save(test_hash_array)
 
-      expect(@data_source).to respond_to(:save)
-      expect(return_value).to equal(@test_return_array)
+      expect(data_source).to respond_to(:save)
+      expect(return_value).to equal(test_hash_array)
     end
   end
 
   context 'when the delete method is called' do
     it 'calls delete on the data_source and returns true' do
-      expect(@data_store_mock).to receive(:delete).with(@test_return_array).and_return(true)
+      expect(data_store_mock).to receive(:delete).with(test_entity_array).and_return(true)
 
-      return_value = @data_source.delete(@test_return_array)
+      return_value = data_source.delete(test_hash_array)
 
-      expect(@data_source).to respond_to(:delete)
+      expect(data_source).to respond_to(:delete)
       expect(return_value).to equal(true)
     end
   end

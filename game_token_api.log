@@ -55,3 +55,5 @@ I, [2021-03-17T13:25:00.255512 #66168]  INFO -- : called GET api/game_tokens
 I, [2021-03-17T13:30:46.894592 #68672]  INFO -- : called GET api/game_tokens
 I, [2021-03-17T13:42:21.439295 #73496]  INFO -- : called GET api/game_tokens
 I, [2021-03-17T13:52:23.247447 #77617]  INFO -- : called GET api/game_tokens
+I, [2021-03-17T14:54:47.823216 #108297]  INFO -- : called GET api/game_tokens
+I, [2021-03-17T14:59:58.883788 #110490]  INFO -- : called GET api/game_tokens

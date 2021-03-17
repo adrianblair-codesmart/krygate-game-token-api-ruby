@@ -98,7 +98,6 @@ module Data
       # @return [true] returns true if the entities were deleted successfully
       def delete(entities)
         value = @data_store.delete(@data_source_parser.hashes_to_entities(entities))
-        @data_source_parser.entities_to_hashes(value)
       end
     end
   end

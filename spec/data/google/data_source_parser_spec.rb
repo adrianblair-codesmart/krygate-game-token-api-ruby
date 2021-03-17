@@ -10,7 +10,7 @@ describe Data::Google::DataSourceParser do
   let(:game_token_base_hash) { build(:game_token_base_hash) }
   let(:test_entity_array) { create_game_token_entity_array }
   let(:test_hash_array) { create_game_token_hash_array }
-  let(:entity_mock) { create_entity_mock }
+  let(:entity_mock) { create_entity_mock(game_token_base_hash, game_token_full_hash) }
 
   context 'when the data source parser is constructed' do
     it 'should store the data source as an instance variable' do

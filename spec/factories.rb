@@ -14,7 +14,7 @@ FactoryBot.define do
     id { 'token_id' }
     token_name { "token's name" }
     token_key { 'token_key' }
-    token_domains { [Faker::Internet.domain_name] }
+    token_domains { ['localhost'] }
   end
   # global factory traits end
 
