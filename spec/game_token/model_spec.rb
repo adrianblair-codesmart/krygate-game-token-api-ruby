@@ -5,13 +5,11 @@ require 'dry-struct'
 require 'byebug'
 
 describe GameToken::Model do
-  before(:all) do
-    @model = build(:game_token)
-  end
+  let(:model) { build(:game_token) }
 
   context 'when the model has a ds_kind attribute' do
     it 'defaults to the value of "GameToken"' do
-      expect(@model.ds_kind).to eql('GameToken')
+      expect(model.ds_kind).to eql('GameToken')
     end
 
     it 'throws a Dry::Struct::Error if the value is invalid' do
@@ -40,7 +38,7 @@ describe GameToken::Model do
     end
 
     it 'returns the current id' do
-      expect(@model.id).to eql("token_id")
+      expect(model.id).to eql("token_id")
     end
   end
 
@@ -69,7 +67,7 @@ describe GameToken::Model do
     end
 
     it 'returns the current token name' do
-      expect(@model.token_name).to eql("token's name")
+      expect(model.token_name).to eql("token's name")
     end
   end
 
@@ -98,7 +96,7 @@ describe GameToken::Model do
     end
 
     it 'returns the current token key' do
-      expect(@model.token_key).to eql("token_key")
+      expect(model.token_key).to eql("token_key")
     end
   end
 
@@ -127,7 +125,7 @@ describe GameToken::Model do
     end
 
     it 'returns the current token domains' do
-      expect(@model.token_domains).to include('localhost')
+      expect(model.token_domains).to include('localhost')
     end
   end
 end
