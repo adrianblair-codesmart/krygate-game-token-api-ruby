@@ -2,6 +2,7 @@
 
 require 'helpers'
 require 'factory_bot'
+require 'faker'
 require 'simplecov'
 SimpleCov.start
 

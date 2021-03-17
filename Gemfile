@@ -42,3 +42,5 @@ gem 'simplecov', '~> 0.21.2'
 
 gem "google-cloud-datastore", "~> 2.1"
 gem "factory_bot", "~> 6.1"
+
+gem "faker", "~> 2.17"
