@@ -7,8 +7,6 @@ describe Data::Google::DatastoreSource do
   before(:each) do
     @test_kind = 'test_kind'
     @test_id = 'test_id'
-    @test_entity = {}
-    @test_return_entity = {}
     @test_return_array = [{}]
 
     @test_params = {
@@ -19,6 +17,19 @@ describe Data::Google::DatastoreSource do
       token_key: 'abc123',
       token_domains: ['localhost']
     }
+
+    @test_entity = double(Google::Cloud::Datastore::Entity)
+    allow(@test_entity).to receive(:properties).and_return({})
+    
+    entity_key_mock = double
+    allow(entity_key_mock).to receive(:kind).and_return(@test_params[:ds_kind])
+    allow(entity_key_mock).to receive(:id).and_return(@test_params[@test_params[:ds_identifier]])
+
+    entity_properties_mock = double
+    allow(entity_properties_mock).to receive(:to_h).and_return(entity_hash)
+
+    allow(entity_mock).to receive(:properties).and_return(entity_properties_mock)
+    allow(entity_mock).to receive(:key).and_return(entity_key_mock)
 
     @test_model = GameToken::Model.new(@test_params)
 
@@ -35,12 +46,12 @@ describe Data::Google::DatastoreSource do
 
   context 'when the find method is called' do
     it 'calls find on the data_source and returns the entity with the matching id' do
-      expect(@data_store_mock).to receive(:find).with(@test_kind, @test_id).and_return(@test_return_entity)
+      expect(@data_store_mock).to receive(:find).with(@test_kind, @test_id).and_return(@test_entity)
 
       return_value = @data_source.find(@test_kind, @test_id)
 
       expect(@data_source).to respond_to(:find)
-      expect(return_value).to equal(@test_return_entity)
+      expect(return_value).to equal(@test_entity)
     end
   end
 

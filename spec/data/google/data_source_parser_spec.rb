@@ -8,14 +8,10 @@ describe Data::Google::DataSourceParser do
     @test_entity = {}
     @test_return_array = [{}]
 
-    @test_params = {
-      ds_identifier: 'token_id',
-      ds_kind: 'GameToken',
-      id: 'token_id',
-      token_name: "token's name",
-      token_key: 'abc123',
-      token_domains: ['localhost']
-    }
+    @model = build(:game_token)
+    @test_params = @model.to_h
+
+    @expected_return_values = build(:game_token_base_hash)
 
     @data_store_mock = double(Google::Cloud::Datastore)
     @data_source_parser = Data::Google::DataSourceParser.new(data_store: @data_store_mock)
@@ -33,7 +29,7 @@ describe Data::Google::DataSourceParser do
       entity_mock = instance_double(Google::Cloud::Datastore::Entity)
 
       expect(@data_store_mock).to receive(:entity)
-        .with(@test_params[:ds_kind], @test_params[:ds_identifier])
+        .with(@test_params[:ds_kind], @test_params[@test_params[:ds_identifier]])
         .and_yield(entity_mock)
         .and_return(entity_mock)
 
@@ -90,7 +86,7 @@ describe Data::Google::DataSourceParser do
 
       entity_key_mock = double
       allow(entity_key_mock).to receive(:kind).and_return(@test_params[:ds_kind])
-      allow(entity_key_mock).to receive(:name).and_return(@test_params[:ds_identifier])
+      allow(entity_key_mock).to receive(:id).and_return(@test_params[@test_params[:ds_identifier]])
 
       entity_properties_mock = double
       allow(entity_properties_mock).to receive(:to_h).and_return(entity_hash)
@@ -99,7 +95,7 @@ describe Data::Google::DataSourceParser do
       allow(entity_mock).to receive(:key).and_return(entity_key_mock)
 
       return_value = @data_source_parser.entity_to_hash(entity_mock)
-      expect(return_value).to eq(@test_params)
+      expect(return_value).to eq(@expected_return_values)
     end
   end
 

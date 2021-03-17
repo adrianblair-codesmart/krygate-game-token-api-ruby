@@ -6,41 +6,24 @@ require 'byebug'
 
 describe GameToken::Model do
   before(:all) do
-    @model = GameToken::Model.new(
-      ds_kind: 'TestKind',
-      id: "token's id",
-      token_name: "token's name",
-      token_key: "token's key",
-      token_domains: ['localhost']
-    )
+    @model = build(:game_token)
   end
 
   context 'when the model has a ds_kind attribute' do
     it 'defaults to the value of "GameToken"' do
-      test_model = GameToken::Model.new(
-        id: "token's id",
-        token_name: "token's name",
-        token_key: "token's key",
-        token_domains: ['localhost']
-      )
-
-      expect(test_model.ds_kind).to eql('GameToken')
+      expect(@model.ds_kind).to eql('GameToken')
     end
 
     it 'throws a Dry::Struct::Error if the value is invalid' do
       expect do
         GameToken::Model.new(
           ds_kind: nil,
-          id: "token's id",
+          id: "token_id",
           token_name: "token's name",
-          token_key: "token's key",
+          token_key: "token_key",
           token_domains: ['localhost']
         )
       end.to raise_error(Dry::Struct::Error)
-    end
-
-    it 'returns the current ds_kind' do
-      expect(@model.ds_kind).to eql('TestKind')
     end
   end
 
@@ -49,7 +32,7 @@ describe GameToken::Model do
       test_model = GameToken::Model.new(
         ds_kind: 'TestKind',
         token_name: "token's name",
-        token_key: "token's key",
+        token_key: "token_key",
         token_domains: ['localhost']
       )
 
@@ -57,7 +40,7 @@ describe GameToken::Model do
     end
 
     it 'returns the current id' do
-      expect(@model.id).to eql("token's id")
+      expect(@model.id).to eql("token_id")
     end
   end
 
@@ -66,9 +49,9 @@ describe GameToken::Model do
       expect do
         GameToken::Model.new(
           ds_kind: 'TestKind',
-          id: "token's id",
+          id: "token_id",
           token_name: nil,
-          token_key: "token's key",
+          token_key: "token_key",
           token_domains: ['localhost']
         )
       end.to raise_error(Dry::Struct::Error)
@@ -78,8 +61,8 @@ describe GameToken::Model do
       expect do
         GameToken::Model.new(
           ds_kind: 'TestKind',
-          id: "token's id",
-          token_key: "token's key",
+          id: "token_id",
+          token_key: "token_key",
           token_domains: ['localhost']
         )
       end.to raise_error(Dry::Struct::Error)
@@ -95,7 +78,7 @@ describe GameToken::Model do
       expect do
         GameToken::Model.new(
           ds_kind: 'TestKind',
-          id: "token's id",
+          id: "token_id",
           token_name: "token's name",
           token_key: nil,
           token_domains: ['localhost']
@@ -107,7 +90,7 @@ describe GameToken::Model do
       expect do
         GameToken::Model.new(
           ds_kind: 'TestKind',
-          id: "token's id",
+          id: "token_id",
           token_name: "token's name",
           token_domains: ['localhost']
         )
@@ -115,7 +98,7 @@ describe GameToken::Model do
     end
 
     it 'returns the current token key' do
-      expect(@model.token_key).to eql("token's key")
+      expect(@model.token_key).to eql("token_key")
     end
   end
 
@@ -124,9 +107,9 @@ describe GameToken::Model do
       expect do
         GameToken::Model.new(
           ds_kind: 'TestKind',
-          id: "token's id",
+          id: "token_id",
           token_name: "token's name",
-          token_key: "token's key",
+          token_key: "token_key",
           token_domains: nil
         )
       end.to raise_error(Dry::Struct::Error)
@@ -136,9 +119,9 @@ describe GameToken::Model do
       expect do
         GameToken::Model.new(
           ds_kind: 'TestKind',
-          id: "token's id",
+          id: "token_id",
           token_name: "token's name",
-          token_key: "token's key"
+          token_key: "token_key"
         )
       end.to raise_error(Dry::Struct::Error)
     end

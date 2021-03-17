@@ -41,17 +41,16 @@ module GameToken
       end
       post do
 
-          params[:token_key] = SecureRandom.uuid
+        params[:token_key] = SecureRandom.uuid
 
-          contract = NewGameTokenContract.new
-          result = contract.call(params)
+        contract = NewGameTokenContract.new
+        result = contract.call(params)
 
-          if (result.errors.count > 0)
-            error! result.errors.to_h, 400
-          end
-          byebug
-          model = GameToken::Model.new(result.to_h)
-          @game_token_dao.insert(model)
+        if (result.errors.count > 0)
+          error! result.errors.to_h, 400
+        end
+        model = GameToken::Model.new(result.to_h)
+        @game_token_dao.insert(model)
         # https://stackoverflow.com/questions/2239240/use-rackcommonlogger-in-sinatra
         # https://github.com/rack/rack/blob/master/lib/rack/common_logger.rb
         #TODO Add Rescue statement which logs error and returns a generic error message.
@@ -63,6 +62,7 @@ module GameToken
         params do
         end
         get do
+          App::AppLogger.instance.info('called GET api/game_tokens')
           @game_token_dao.find(params[:id])
         end
       end

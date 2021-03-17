@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'helpers'
+require 'factory_bot'
 require 'simplecov'
 SimpleCov.start
 
@@ -100,6 +102,13 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
+  config.include FactoryBot::Syntax::Methods
+
+  config.before(:suite) do
+    FactoryBot.find_definitions
+  end
+
+  config.include Helpers
 end
 
 require './lib/app/app_container'

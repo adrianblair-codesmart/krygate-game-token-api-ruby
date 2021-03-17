@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'google/cloud/datastore'
+require 'byebug'
 
 # Namespace for data related modules and classes
 # @author Adrian Blair
@@ -27,7 +28,7 @@ module Data
       # @return [Google::Cloud::Datastore::Entity] returns the converted hash as an entity
       # @see https://googleapis.dev/ruby/google-cloud-datastore/latest/Google/Cloud/Datastore/Entity.html Google::Cloud::Datastore::Entity
       def hash_to_entity(item)
-        @data_store.entity item[:ds_kind], item[:ds_identifier] do |t|
+        @data_store.entity item[:ds_kind], item[item[:ds_identifier]] do |t|
           item.each do |key, value|
             t[key] = value if key != :ds_identifier && key != :ds_kind && key != :id
           end
