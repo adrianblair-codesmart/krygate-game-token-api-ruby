@@ -16,14 +16,14 @@ module Data
       @data_source = data_source
     end
 
-    # Finds an entity by key or by a combination of kind and id or name
+    # Finds an model by key or by a combination of kind and id or name
     # - the key being an object containing all the necessary data e.g. the kind and identifier
     # - the kind being a string representing the kind or table name
     # - the id or name being a string which represents an identifier
     #
-    # @param key_or_kind [Object, String] an indentifier for an entity or kind
+    # @param key_or_kind [Object, String] an identifier for an model or kind
     # @param id_or_name [String] an identifying key represented as an id or name
-    # @return [Object, nil] returns an entity Object or nil if not found
+    # @return [Object, nil] returns an model Object or nil if not found
     def find(key_or_kind, id_or_name = nil)
       @data_source.find(key_or_kind, id_or_name)
     end
@@ -47,55 +47,54 @@ module Data
       @data_source.run(query)
     end
 
-    # Inserts entities into a data source
-    # - the entities must not already exist
+    # Inserts models into a data source
+    # - the models must not already exist
     #
-    # @param entities [#to_h] one or more objects which can be converted to hashes
-    # @return [Array<Hash>] returns the entities inserted successfully
-    def insert(*entities)
-      @data_source.insert(convert_entites_to_hash(entities))
+    # @param models [#to_h] one or more objects which can be converted to hashes
+    # @return [Array<Hash>] returns the models inserted successfully
+    def insert(*models)
+      @data_source.insert(convert_models_to_hashes(models))
     end
 
-    # Updates entities in a data source
-    # - the entities must already exist
+    # Updates models in a data source
+    # - the models must already exist
     #
-    # @param entities [#to_h] one or more objects which can be converted to hashes
-    # @return [Array<Hash>] returns the entities updated successfully
-    def update(*entities)
-      @data_source.update(convert_entites_to_hash(entities))
+    # @param models [#to_h] one or more objects which can be converted to hashes
+    # @return [Array<Hash>] returns the models updated successfully
+    def update(*models)
+      @data_source.update(convert_models_to_hashes(models))
     end
 
-    # Saves entities in a data source
-    # - an insert will be performed if the entities don't exist
-    # - an update will be performed if the entities already exist
+    # Saves models in a data source
+    # - an insert will be performed if the models don't exist
+    # - an update will be performed if the models already exist
     # - also known as an upsert
     #
-    # @param entities [#to_h] one or more objects which can be converted to hashes
-    # @return [Array<Hash>] returns the entities saved successfully
-    def save(*entities)
-      @data_source.save(convert_entites_to_hash(entities))
+    # @param models [#to_h] one or more objects which can be converted to hashes
+    # @return [Array<Hash>] returns the models saved successfully
+    def save(*models)
+      @data_source.save(convert_models_to_hashes(models))
     end
 
-    # Deletes entities from a data source
-    # - the entities themselves can be passed or just the keys of the entities
+    # Deletes models from a data source
+    # - the models themselves can be passed or just the keys of the models
     #
-    # @param entities [#to_h] one or more objects which can be converted to hashes
-    # @return [true] returns true if the entities were deleted successfully
-    def delete(*entities)
-      @data_source.delete(convert_entites_to_hash(entities))
+    # @param models [#to_h] one or more objects which can be converted to hashes
+    # @return [true] returns true if the models were deleted successfully
+    def delete(*models)
+      @data_source.delete(convert_models_to_hashes(models))
     end
 
-    # Convert entities to hashes
+    # Convert models to hashes
     #
-    # @param entities [#to_h] one or more objects which can be converted to hashes
-    # @return [Array<Hash>] returns an array of hashes which represent the entities
-    def convert_entites_to_hash(*entities)
-      entities.flatten!
+    # @param models [#to_h] one or more objects which can be converted to hashes
+    # @return [Array<Hash>] returns an array of hashes which represent the models
+    def convert_models_to_hashes(*models)
+      models.flatten!
 
-      entities.map! do |entity|
-        raise TypeError, "#{entity.inspect} cannot be converted to a hash." unless entity.respond_to? :to_h
-
-        entity.to_h
+      models.map! do |model|
+        raise TypeError, "#{model.inspect} cannot be converted to a hash." unless model.respond_to? :to_h
+        model.to_h
       end
     end
   end

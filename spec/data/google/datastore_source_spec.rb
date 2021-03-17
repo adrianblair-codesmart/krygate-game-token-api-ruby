@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'google/cloud/datastore'
 
 describe Data::Google::DatastoreSource do
-  let(:test_entity_array) { create_game_token_entity_array }
+  let(:test_model_array) { create_game_token_model_array }
   let(:test_hash_array) { create_game_token_hash_array }
   let(:game_token_full_hash) { build(:game_token_full_hash) }
   let(:game_token_base_hash) { build(:game_token_base_hash) }
@@ -16,7 +16,7 @@ describe Data::Google::DatastoreSource do
   let(:data_source_parser) do
     create_data_source_parser_mock(
       entity_mock: entity_mock,
-      test_entity_array: test_entity_array,
+      test_model_array: test_model_array,
       game_token_base_hash: game_token_base_hash,
       test_hash_array: test_hash_array)
   end
@@ -56,7 +56,7 @@ describe Data::Google::DatastoreSource do
 
   context 'when the insert method is called' do
     it 'calls insert on the data_source and returns an entity object' do
-      expect(data_store_mock).to receive(:insert).with(test_entity_array).and_return(test_entity_array)
+      expect(data_store_mock).to receive(:insert).with(test_model_array).and_return(test_model_array)
 
       return_value = data_source.insert(test_hash_array)
 
@@ -67,7 +67,7 @@ describe Data::Google::DatastoreSource do
 
   context 'when the update method is called' do
     it 'calls update on the data_source and returns an entity object' do
-      expect(data_store_mock).to receive(:update).with(test_entity_array).and_return(test_entity_array)
+      expect(data_store_mock).to receive(:update).with(test_model_array).and_return(test_model_array)
 
       return_value = data_source.update(test_hash_array)
 
@@ -78,7 +78,7 @@ describe Data::Google::DatastoreSource do
 
   context 'when the save method is called' do
     it 'calls save on the data_source and returns an entity object' do
-      expect(data_store_mock).to receive(:save).with(test_entity_array).and_return(test_entity_array)
+      expect(data_store_mock).to receive(:save).with(test_model_array).and_return(test_model_array)
 
       return_value = data_source.save(test_hash_array)
 
@@ -89,7 +89,7 @@ describe Data::Google::DatastoreSource do
 
   context 'when the delete method is called' do
     it 'calls delete on the data_source and returns true' do
-      expect(data_store_mock).to receive(:delete).with(test_entity_array).and_return(true)
+      expect(data_store_mock).to receive(:delete).with(test_model_array).and_return(true)
 
       return_value = data_source.delete(test_hash_array)
 

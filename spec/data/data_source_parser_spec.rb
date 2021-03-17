@@ -73,7 +73,7 @@ describe Data::DataSourceParser do
 
   context 'when entities_to_hashes is called with an array of entity objects' do
     it 'calls the entity_to_hash for each entity object' do
-      test_entity_array = [
+      test_model_array = [
         @test_entity,
         @test_entity,
         @test_entity,
@@ -81,23 +81,23 @@ describe Data::DataSourceParser do
       ]
 
       allow(@data_source_parser).to receive(:entity_to_hash)
-      @data_source_parser.entities_to_hashes(test_entity_array)
+      @data_source_parser.entities_to_hashes(test_model_array)
 
       expect(@data_source_parser).to have_received(:entity_to_hash).exactly(4).times.with(@test_entity)
     end
 
     it 'calls return an array of objects' do
-      test_entity_array = [
+      test_model_array = [
         @test_entity,
         @test_entity,
         @test_entity,
         @test_entity
       ]
 
-      allow(test_entity_array).to receive(:map).and_return(@test_return_array)
-      return_value = @data_source_parser.entities_to_hashes(test_entity_array)
+      allow(test_model_array).to receive(:map).and_return(@test_return_array)
+      return_value = @data_source_parser.entities_to_hashes(test_model_array)
 
-      expect(test_entity_array).to have_received(:map)
+      expect(test_model_array).to have_received(:map)
       expect(return_value).to be(@test_return_array)
     end
   end

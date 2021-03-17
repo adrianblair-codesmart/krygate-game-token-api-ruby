@@ -1,5 +1,5 @@
 module Helpers
-  def create_game_token_entity_array()
+  def create_game_token_model_array()
     (0..3).map do |i|
       build(:game_token)
     end
@@ -31,12 +31,12 @@ module Helpers
     entity_mock
   end
 
-  def create_data_source_parser_mock(entity_mock:, test_entity_array:, game_token_base_hash:, test_hash_array:)
+  def create_data_source_parser_mock(entity_mock:, test_model_array:, game_token_base_hash:, test_hash_array:)
     data_source_parser = instance_double(Data::Google::DataSourceParser)
     allow(data_source_parser).to receive(:entity_to_hash).with(entity_mock).and_return(game_token_base_hash)
-    allow(data_source_parser).to receive(:entities_to_hashes).with(test_entity_array).and_return(test_hash_array)
+    allow(data_source_parser).to receive(:entities_to_hashes).with(test_model_array).and_return(test_hash_array)
     allow(data_source_parser).to receive(:hash_to_entity).with(game_token_base_hash).and_return(entity_mock)
-    allow(data_source_parser).to receive(:hashes_to_entities).with(test_hash_array).and_return(test_entity_array)
+    allow(data_source_parser).to receive(:hashes_to_entities).with(test_hash_array).and_return(test_model_array)
     data_source_parser
   end
 

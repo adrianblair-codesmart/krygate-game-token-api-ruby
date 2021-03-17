@@ -8,7 +8,7 @@ describe Data::Google::DataSourceParser do
   let(:data_source_parser) { Data::Google::DataSourceParser.new(data_store: data_store_mock) }
   let(:game_token_full_hash) { build(:game_token_full_hash) }
   let(:game_token_base_hash) { build(:game_token_base_hash) }
-  let(:test_entity_array) { create_game_token_entity_array }
+  let(:test_model_array) { create_game_token_model_array }
   let(:test_hash_array) { create_game_token_hash_array }
   let(:entity_mock) { create_entity_mock(game_token_base_hash, game_token_full_hash) }
 
@@ -47,11 +47,11 @@ describe Data::Google::DataSourceParser do
     end
 
     it 'calls return an array of objects' do
-      allow(test_hash_array).to receive(:map).and_return(test_entity_array)
+      allow(test_hash_array).to receive(:map).and_return(test_model_array)
       return_value = data_source_parser.hashes_to_entities(test_hash_array)
 
       expect(test_hash_array).to have_received(:map)
-      expect(return_value).to be(test_entity_array)
+      expect(return_value).to be(test_model_array)
     end
   end
 
@@ -66,16 +66,16 @@ describe Data::Google::DataSourceParser do
     it 'calls the entity_to_hash for each entity object' do
 
       allow(data_source_parser).to receive(:entity_to_hash)
-      data_source_parser.entities_to_hashes(test_entity_array)
+      data_source_parser.entities_to_hashes(test_model_array)
 
       expect(data_source_parser).to have_received(:entity_to_hash).exactly(4).times
     end
 
     it 'calls return an array of objects' do
-      allow(test_entity_array).to receive(:map).and_return(test_hash_array)
-      return_value = data_source_parser.entities_to_hashes(test_entity_array)
+      allow(test_model_array).to receive(:map).and_return(test_hash_array)
+      return_value = data_source_parser.entities_to_hashes(test_model_array)
 
-      expect(test_entity_array).to have_received(:map)
+      expect(test_model_array).to have_received(:map)
       expect(return_value).to be(test_hash_array)
     end
   end
