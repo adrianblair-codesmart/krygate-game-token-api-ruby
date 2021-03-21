@@ -51,8 +51,7 @@ module GameToken
         end
         model = GameToken::Model.new(result.to_h)
         @game_token_dao.insert(model)
-        # https://stackoverflow.com/questions/2239240/use-rackcommonlogger-in-sinatra
-        # https://github.com/rack/rack/blob/master/lib/rack/common_logger.rb
+
         #TODO Add Rescue statement which logs error and returns a generic error message.
       end
 
@@ -62,8 +61,10 @@ module GameToken
         params do
         end
         get do
-          App::AppLogger.instance.info('called GET api/game_tokens')
-          @game_token_dao.find(params[:id])
+          #App::AppLogger.instance.info('called GET api/game_tokens')
+          item = @game_token_dao.find(params[:id])
+          error! "resource with id: #{params[:id]} could not be found.", 404 if item.blank?
+          item
         end
       end
     end
