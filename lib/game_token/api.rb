@@ -46,9 +46,8 @@ module GameToken
         contract = NewGameTokenContract.new
         result = contract.call(params)
 
-        if (result.errors.count > 0)
-          error! result.errors.to_h, 400
-        end
+        error! result.errors.to_h, 400 if (result.errors.count > 0)
+
         model = GameToken::Model.new(result.to_h)
         @game_token_dao.insert(model)
 

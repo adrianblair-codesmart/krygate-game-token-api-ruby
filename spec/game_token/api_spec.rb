@@ -8,6 +8,7 @@ describe GameToken::Api do
   include Rack::Test::Methods
 
   let(:game_token_base_hash) { build(:game_token_base_hash) }
+  let(:game_token) { build(:game_token) }
   let(:game_token_base_array) { create_game_token_base_hash_array }
   let(:game_token_dao) { App::AppContainer.instance.resolve(:game_token_dao) }
 
@@ -21,7 +22,7 @@ describe GameToken::Api do
 
   context 'when the GET method is sent to /api/game_tokens/' do
     it 'returns an empty array of game tokens' do
-      game_token_query = double("GameTokenQuery")
+      game_token_query = double('GameTokenQuery')
       allow(game_token_dao).to receive(:query) { game_token_query }
       allow(game_token_dao).to receive(:run).with(game_token_query) { game_token_base_array }
 
@@ -30,6 +31,7 @@ describe GameToken::Api do
       expect(last_response.body).to eql(game_token_base_array.to_json)
     end
   end
+
   context 'when the GET method is sent to /api/game_tokens/:id' do
     it 'returns a game token by id' do
       allow(game_token_dao).to receive(:find) { game_token_base_hash }
@@ -46,7 +48,40 @@ describe GameToken::Api do
       get "/api/game_tokens/#{game_token_base_hash[:id]}"
       expect(last_response.status).to eq 404
       expect(last_response.body).to eql(expected_error.to_json)
-      byebug
+    end
+  end
+
+  context 'when the POST method is sent to /api/game_tokens/' do
+    context 'with valid parameters' do
+      it 'creates a game token' do
+        allow(game_token_dao).to receive(:insert) { game_token_base_hash }
+
+        post '/api/game_tokens/', { token_name: game_token.token_name, token_domains: game_token.token_domains }
+        expect(last_response.status).to eq 201
+        expect(last_response.body).to eql(game_token_base_hash.to_json)
+      end
+    end
+  end
+
+  context 'with a missing token name parameter' do
+    it 'returns an array of errors with a 400 response code' do
+      expected_error = {"error": "token_name is missing, token_name is empty"}
+
+      post '/api/game_tokens/'
+
+      expect(last_response.status).to eq 400
+      expect(last_response.body).to eql(expected_error.to_json)
+    end
+  end
+
+  context 'with an invalid token name' do
+    it 'returns an array of errors with a 400 response code' do
+      expected_error = {"error": "token_name is empty"}
+
+      post '/api/game_tokens/', { token_name: nil }
+
+      expect(last_response.status).to eq 400
+      expect(last_response.body).to eql(expected_error.to_json)
     end
   end
 end
