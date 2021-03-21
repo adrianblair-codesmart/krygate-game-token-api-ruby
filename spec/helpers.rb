@@ -5,9 +5,15 @@ module Helpers
     end
   end
 
-  def create_game_token_hash_array()
+  def create_game_token_full_hash_array()
     (0..3).map do |i|
       build(:game_token_full_hash)
+    end
+  end
+
+  def create_game_token_base_hash_array()
+    (0..3).map do |i|
+      build(:game_token_base_hash)
     end
   end
 

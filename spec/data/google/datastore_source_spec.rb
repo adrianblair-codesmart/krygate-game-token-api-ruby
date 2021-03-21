@@ -5,7 +5,7 @@ require 'google/cloud/datastore'
 
 describe Data::Google::DatastoreSource do
   let(:test_model_array) { create_game_token_model_array }
-  let(:test_hash_array) { create_game_token_hash_array }
+  let(:test_hash_array) { create_game_token_full_hash_array }
   let(:game_token_full_hash) { build(:game_token_full_hash) }
   let(:game_token_base_hash) { build(:game_token_base_hash) }
   let(:entity_mock) { create_entity_mock(game_token_base_hash, game_token_full_hash) }

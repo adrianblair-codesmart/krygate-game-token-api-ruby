@@ -99,3 +99,5 @@ module Data
     end
   end
 end
+
+# takes the full hash and converts it to the
