@@ -40,18 +40,24 @@ module GameToken
         optional :token_domains, type: Array[String], default: []
       end
       post do
+        begin
+          params[:token_key] = SecureRandom.uuid
 
-        params[:token_key] = SecureRandom.uuid
+          contract = NewGameTokenContract.new
+          result = contract.call(params)
 
-        contract = NewGameTokenContract.new
-        result = contract.call(params)
+          error!({ errors: result.errors.to_h }, 400) if (result.errors.count > 0)
 
-        error! result.errors.to_h, 400 if (result.errors.count > 0)
+          model = GameToken::Model.new(result.to_h)
+          @game_token_dao.insert(model)
 
-        model = GameToken::Model.new(result.to_h)
-        @game_token_dao.insert(model)
-
-        #TODO Add Rescue statement which logs error and returns a generic error message.
+        rescue TypeError => e
+          App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
+          error!({ error: e.message }, 400)
+        rescue StandardError => e
+          App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
+          error!({ error: 'An unexpected error occurred.' }, 500)
+        end
       end
 
       route_param :id, type: String do
@@ -60,7 +66,6 @@ module GameToken
         params do
         end
         get do
-          #App::AppLogger.instance.info('called GET api/game_tokens')
           item = @game_token_dao.find(params[:id])
           error! "resource with id: #{params[:id]} could not be found.", 404 if item.blank?
           item

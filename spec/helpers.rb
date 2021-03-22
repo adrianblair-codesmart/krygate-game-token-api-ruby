@@ -46,4 +46,13 @@ module Helpers
     data_source_parser
   end
 
+  def mock_logger()
+    allow(App::AppLogger.instance).to receive(:unknown)
+    allow(App::AppLogger.instance).to receive(:fatal)
+    allow(App::AppLogger.instance).to receive(:error)
+    allow(App::AppLogger.instance).to receive(:warn)
+    allow(App::AppLogger.instance).to receive(:info)
+    allow(App::AppLogger.instance).to receive(:debug)
+  end
+
 end

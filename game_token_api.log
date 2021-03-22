@@ -1,3 +1,0 @@
-# Logfile created on 2021-03-21 12:59:41 +0000 by logger.rb/v1.4.3
-I, [2021-03-21T12:59:41.718050 #3501]  INFO -- : called GET api/game_tokens
-I, [2021-03-21T13:03:29.193721 #4389]  INFO -- : called GET api/game_tokens
