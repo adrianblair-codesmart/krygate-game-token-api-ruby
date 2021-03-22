@@ -107,6 +107,7 @@ module Data
     # Convert model to hash
     #
     # @param model [#to_h] object which can be converted to hash
+    # @raise [TypeError] raised when the object does not have a .to_h method to convert to a hash
     # @return [Hash] returns a hash which represents the model
     def convert_model_to_hash(model)
       raise TypeError, "#{model.inspect} cannot be converted to a hash." unless model.respond_to? :to_h
