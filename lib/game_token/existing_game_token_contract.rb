@@ -11,11 +11,9 @@ module GameToken
   #     params do
   #       required(:id).filled(:string)
   #       required(:token_name).filled(:string)
-  #       required(:token_key).filled(:string)
   #       optional(:token_domains).array(:string)
   #     end
   # - rules include:
-  #     rule(:token_key).validate(:no_blank_spaces_format)
   #     rule(:token_domains).validate(:only_unique_array_values)
   #     rule(:token_domains).each do
   #       key.failure('cannot contain any blank spaces') if value.match(' ')
@@ -25,11 +23,11 @@ module GameToken
     params do
       required(:id).filled(:string)
       required(:token_name).filled(:string)
-      required(:token_key).filled(:string)
+      #required(:token_key).filled(:string)
       optional(:token_domains).array(:string)
     end
 
-    rule(:token_key).validate(:no_blank_spaces_format)
+    #rule(:token_key).validate(:no_blank_spaces_format)
     rule(:token_domains).validate(:only_unique_array_values)
 
     # This validation is very simple and only to help prevent user error.

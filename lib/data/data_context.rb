@@ -39,6 +39,15 @@ module Data
       @data_source.query(kind)
     end
 
+    # Returns a query string object from a data store
+    # - the query object will have to be run to retrieve the results
+    # - the query object acts like a builder object
+    #
+    # @return [Object] the query object acts like a builder object
+    def query_string
+      @data_source.query_string
+    end
+
     # Runs a query object on a data source
     #
     # @param query [Object] the query to be run on the data source
@@ -50,18 +59,18 @@ module Data
     # Inserts models into a data source
     # - the models must not already exist
     #
-    # @param models [#to_h] one or more objects which can be converted to hashes
+    # @param models [Array<#to_h>] one or more objects which can be converted to hashes
     # @return [Array<Hash>] returns the models inserted successfully
-    def insert(*models)
+    def insert(models)
       @data_source.insert(convert_models_to_hashes(models))
     end
 
     # Updates models in a data source
     # - the models must already exist
     #
-    # @param models [#to_h] one or more objects which can be converted to hashes
+    # @param models [Array<#to_h>] one or more objects which can be converted to hashes
     # @return [Array<Hash>] returns the models updated successfully
-    def update(*models)
+    def update(models)
       @data_source.update(convert_models_to_hashes(models))
     end
 
@@ -70,32 +79,38 @@ module Data
     # - an update will be performed if the models already exist
     # - also known as an upsert
     #
-    # @param models [#to_h] one or more objects which can be converted to hashes
+    # @param models [Array<#to_h>] one or more objects which can be converted to hashes
     # @return [Array<Hash>] returns the models saved successfully
-    def save(*models)
+    def save(models)
       @data_source.save(convert_models_to_hashes(models))
     end
 
     # Deletes models from a data source
     # - the models themselves can be passed or just the keys of the models
     #
-    # @param models [#to_h] one or more objects which can be converted to hashes
+    # @param models [Array<#to_h>] one or more objects which can be converted to hashes
     # @return [true] returns true if the models were deleted successfully
-    def delete(*models)
+    def delete(models)
       @data_source.delete(convert_models_to_hashes(models))
     end
 
     # Convert models to hashes
     #
-    # @param models [#to_h] one or more objects which can be converted to hashes
+    # @param models [Array<#to_h>] one or more objects which can be converted to hashes
     # @return [Array<Hash>] returns an array of hashes which represent the models
-    def convert_models_to_hashes(*models)
-      models.flatten!
+    def convert_models_to_hashes(models)
+        models.map! do |model|
+          convert_model_to_hash(model)
+        end
+    end
 
-      models.map! do |model|
-        raise TypeError, "#{model.inspect} cannot be converted to a hash." unless model.respond_to? :to_h
-        model.to_h
-      end
+    # Convert model to hash
+    #
+    # @param model [#to_h] object which can be converted to hash
+    # @return [Hash] returns a hash which represents the model
+    def convert_model_to_hash(model)
+      raise TypeError, "#{model.inspect} cannot be converted to a hash." unless model.respond_to? :to_h
+      model.to_h
     end
   end
 end

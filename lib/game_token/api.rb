@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'grape'
 require 'securerandom'
 require 'byebug'
@@ -29,8 +27,14 @@ module GameToken
       # get {prefix}/game_tokens/ @returns [Array<GameToken::Model>] as json
       desc 'Get all the available game tokens.'
       get do
-        query = @game_token_dao.query
-        @game_token_dao.run query
+        begin
+          query = @game_token_dao.query
+          @game_token_dao.run query
+        rescue StandardError => e
+          App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
+          error!({error: 'An unexpected error occurred.'}, 500)
+        end
+
       end
 
       # post {prefix}/game_tokens @returns [Array<GameToken::Model>] as json
@@ -41,22 +45,25 @@ module GameToken
       end
       post do
         begin
-          params[:token_key] = SecureRandom.uuid
+          #params[:id] = SecureRandom.uuid
 
           contract = NewGameTokenContract.new
           result = contract.call(params)
 
-          error!({ errors: result.errors.to_h }, 400) if (result.errors.count > 0)
+          error!({errors: result.errors.to_h}, 400) if (result.errors.count > 0)
 
-          model = GameToken::Model.new(result.to_h)
-          @game_token_dao.insert(model)
+          game_token_hash = result.to_h
+          game_token_hash[:id] = SecureRandom.uuid
+          model = GameToken::Model.new(game_token_hash)
+
+          @game_token_dao.insert([model])
 
         rescue TypeError => e
           App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
-          error!({ error: e.message }, 400)
+          error!({error: e.message}, 400)
         rescue StandardError => e
           App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
-          error!({ error: 'An unexpected error occurred.' }, 500)
+          error!({error: 'An unexpected error occurred.'}, 500)
         end
       end
 
@@ -66,9 +73,14 @@ module GameToken
         params do
         end
         get do
-          item = @game_token_dao.find(params[:id])
-          error! "resource with id: #{params[:id]} could not be found.", 404 if item.blank?
-          item
+          begin
+            item = @game_token_dao.find(params[:id])
+            error! "resource with id: #{params[:id]} could not be found.", 404 if item.blank?
+            item
+          rescue StandardError => e
+            App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
+            error!({error: 'An unexpected error occurred.'}, 500)
+          end
         end
       end
     end

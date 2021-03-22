@@ -10,11 +10,11 @@ describe GameToken::ExistingGameTokenContract do
     it 'validates game token parameters without errors' do
       contract_result = contract.call(game_token_base_hash)
 
-      expect(contract_result.values.count).to eq(4)
+      expect(contract_result.values.count).to eq(3)
       expect(contract_result.errors.count).to eq(0)
       expect(contract_result.values.key?(:id)).to be true
       expect(contract_result.values.key?(:token_name)).to be true
-      expect(contract_result.values.key?(:token_key)).to be true
+      #expect(contract_result.values.key?(:token_key)).to be true
       expect(contract_result.values.key?(:token_domains)).to be true
     end
   end
@@ -25,10 +25,10 @@ describe GameToken::ExistingGameTokenContract do
       contract_errors_hash = contract_result.errors.to_h
 
       expect(contract_result.values.count).to eq(0)
-      expect(contract_result.errors.count).to eq(3)
+      expect(contract_result.errors.count).to eq(2)
       expect(contract_errors_hash.key?(:id)).to be true
       expect(contract_errors_hash.key?(:token_name)).to be true
-      expect(contract_errors_hash.key?(:token_key)).to be true
+        #expect(contract_errors_hash.key?(:token_key)).to be true
     end
   end
 end

@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'google/cloud/datastore'
 
-describe Data::Google::DatastoreSource do
+describe Data::GoogleData::DatastoreSource do
   let(:test_model_array) { create_game_token_model_array }
   let(:test_hash_array) { create_game_token_full_hash_array }
   let(:game_token_full_hash) { build(:game_token_full_hash) }
@@ -21,7 +21,7 @@ describe Data::Google::DatastoreSource do
       test_hash_array: test_hash_array)
   end
 
-  let(:data_source) { Data::Google::DatastoreSource.new(data_store: data_store_mock, data_source_parser: data_source_parser) }
+  let(:data_source) { Data::GoogleData::DatastoreSource.new(data_store: data_store_mock, data_source_parser: data_source_parser) }
 
   context 'when the data source is constructed' do
     it 'should store the data source as an instance variable' do

@@ -8,7 +8,7 @@ require 'byebug'
 module Data
   # Namespace for Google related modules and classes
   # @author Adrian Blair
-  module Google
+  module GoogleData
     #  Class representing a data source using the google cloud datastore API
     #
     # @attr_reader [Google::Cloud::Datastore] data_store the data source the context will use
@@ -48,6 +48,17 @@ module Data
       # @return [Object] the query object acts like a builder object
       def query(kind)
         @data_store.query(kind)
+      end
+
+      # Returns a query string object from a data store
+      # - the query object will have to be run to retrieve the results
+      # - the query object acts like a builder object
+      #
+      # @return [Object] the query object acts like a builder object
+      def query_string
+        gql_query = Google::Cloud::Datastore::GqlQuery.new
+        gql_query.allow_literals = false
+        gql_query
       end
 
       # Runs a query object on a data source

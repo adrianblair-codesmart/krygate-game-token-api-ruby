@@ -17,7 +17,7 @@ module GameToken
     attribute :ds_kind, App::Types::Strict::String.default('GameToken')
     attribute :id, App::Types::Coercible::String.optional.default(nil)
     attribute :token_name, App::Types::Strict::String
-    attribute :token_key, App::Types::Strict::String
+    #attribute :token_key, App::Types::Strict::String
     attribute :token_domains, App::Types::Array.of(App::Types::Strict::String)
   end
 end

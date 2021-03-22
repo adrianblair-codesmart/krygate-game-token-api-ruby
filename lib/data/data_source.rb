@@ -27,6 +27,13 @@ module Data
     # @return [Object] the query object acts like a builder object
     def query(kind); end
 
+    # Returns a query string object from a data store
+    # - the query object will have to be run to retrieve the results
+    # - the query object acts like a builder object
+    #
+    # @return [Object] the query object acts like a builder object
+    def query_string; end
+
     # Runs a query object on a data source
     #
     # @param query [Object] the query to be run on the data source

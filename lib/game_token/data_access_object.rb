@@ -14,5 +14,28 @@ module GameToken
     def initialize(data_source: nil)
       super(data_kind: 'GameToken', data_source: data_source)
     end
+
+    # Inserts models into a data source
+    # - the models must not already exist
+    #
+    # @param models [Array<#to_h>] one or more objects which can be converted to hashes
+    # @return [Array<Hash>] returns the models inserted successfully
+    def insert(models)
+      existing_models = find_all_by_name_and_key(models)
+
+      unless existing_models.blank?
+        # raise an error stating the item already exists.
+      end
+
+      @data_source.insert(convert_models_to_hashes(models)) if existing_models.blank?
+    end
+
+    def find_all_by_name_and_key(models)
+      query_obj = query
+
+      models.each { |model| query_obj.where('token_name', '=', model.token_name) }
+
+      run(query_obj)
+    end
   end
 end

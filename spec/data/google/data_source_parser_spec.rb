@@ -3,9 +3,9 @@
 require 'spec_helper'
 require 'google/cloud/datastore'
 
-describe Data::Google::DataSourceParser do
+describe Data::GoogleData::DataSourceParser do
   let(:data_store_mock) { double(Google::Cloud::Datastore) }
-  let(:data_source_parser) { Data::Google::DataSourceParser.new(data_store: data_store_mock) }
+  let(:data_source_parser) { Data::GoogleData::DataSourceParser.new(data_store: data_store_mock) }
   let(:entity_mock) { create_entity_mock(game_token_base_hash, game_token_full_hash) }
   let(:game_token_full_hash) { build(:game_token_full_hash) }
   let(:game_token_base_hash) { build(:game_token_base_hash) }
@@ -36,7 +36,7 @@ describe Data::Google::DataSourceParser do
         .and_return(entity_mock)
 
       expect(entity_mock).to receive(:[]=).with(:token_name, game_token_full_hash[:token_name])
-      expect(entity_mock).to receive(:[]=).with(:token_key, game_token_full_hash[:token_key])
+      #expect(entity_mock).to receive(:[]=).with(:token_key, game_token_full_hash[:token_key])
       expect(entity_mock).to receive(:[]=).with(:token_domains, game_token_full_hash[:token_domains])
 
       return_value = data_source_parser.hash_to_entity(game_token_full_hash)

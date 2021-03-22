@@ -8,7 +8,7 @@ require 'byebug'
 module Data
   # Namespace for Google related modules and classes
   # @author Adrian Blair
-  module Google
+  module GoogleData
     #  Class representing a data source using the google cloud datastore API
     #
     # @attr_reader [Google::Cloud::Datastore] data_store the data source the context will use
@@ -43,7 +43,7 @@ module Data
       # @see https://googleapis.dev/ruby/google-cloud-datastore/latest/Google/Cloud/Datastore/Entity.html Google::Cloud::Datastore::Entity
       def entity_to_hash(item)
         item_hash = item.properties.to_h
-        item_hash[:id] = item.key.id
+        item_hash[:id] = item.key.name
         item_hash
       end
 

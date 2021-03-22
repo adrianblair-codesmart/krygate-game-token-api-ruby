@@ -5,7 +5,7 @@ require 'google/cloud/datastore'
 
 describe Data::DataSourceParser do
   let(:data_store_mock) { double(Data::DataSource) }
-  let(:data_source_parser) { Data::Google::DataSourceParser.new(data_store: data_store_mock) }
+  let(:data_source_parser) { Data::GoogleData::DataSourceParser.new(data_store: data_store_mock) }
   let(:game_token_full_hash) { build(:game_token_full_hash) }
   let(:game_token_base_hash) { build(:game_token_base_hash) }
   let(:test_model_array) { create_game_token_model_array }

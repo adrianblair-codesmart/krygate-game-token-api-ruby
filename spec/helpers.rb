@@ -20,7 +20,7 @@ module Helpers
   def create_entity_key_mock(game_token_full_hash)
     entity_key_mock = double
     allow(entity_key_mock).to receive(:kind).and_return(game_token_full_hash[:ds_kind])
-    allow(entity_key_mock).to receive(:id).and_return(game_token_full_hash[game_token_full_hash[:ds_identifier]])
+    allow(entity_key_mock).to receive(:name).and_return(game_token_full_hash[game_token_full_hash[:ds_identifier]])
     entity_key_mock
   end
 
@@ -38,7 +38,7 @@ module Helpers
   end
 
   def create_data_source_parser_mock(entity_mock:, test_model_array:, game_token_base_hash:, test_hash_array:)
-    data_source_parser = instance_double(Data::Google::DataSourceParser)
+    data_source_parser = instance_double(Data::GoogleData::DataSourceParser)
     allow(data_source_parser).to receive(:entity_to_hash).with(entity_mock).and_return(game_token_base_hash)
     allow(data_source_parser).to receive(:entities_to_hashes).with(test_model_array).and_return(test_hash_array)
     allow(data_source_parser).to receive(:hash_to_entity).with(game_token_base_hash).and_return(entity_mock)

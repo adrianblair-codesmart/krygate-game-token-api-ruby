@@ -108,9 +108,21 @@ describe Data::DataContext do
     end
   end
 
+  context 'when the convert_models_to_hashes method is called with an object not implementing map!' do
+    it 'throws a NoMethodError:' do
+      expect { data_context.convert_models_to_hashes(test_id) }.to raise_error NoMethodError
+    end
+  end
+
   context 'when the convert_models_to_hashes method is called with an object not supporting to_h' do
     it 'throws a TypeError' do
-      expect { data_context.convert_models_to_hashes(test_id) }.to raise_error TypeError
+      expect { data_context.convert_models_to_hashes([test_id]) }.to raise_error TypeError
+    end
+  end
+
+  context 'when the convert_model_to_hash method is called with an object not supporting to_h' do
+    it 'throws a TypeError' do
+      expect { data_context.convert_model_to_hash(test_id) }.to raise_error TypeError
     end
   end
 end

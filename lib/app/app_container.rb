@@ -26,11 +26,11 @@ module App
     end
 
     instance.register :data_source do
-      Data::Google::DatastoreSource.new
+      Data::GoogleData::DatastoreSource.new
     end
 
     instance.register :data_source_parser do
-      Data::Google::DataSourceParser.new
+      Data::GoogleData::DataSourceParser.new
     end
 
     instance.register :game_token_dao do
