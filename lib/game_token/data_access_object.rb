@@ -19,7 +19,7 @@ module GameToken
     # - the models must not already exist
     #
     # @param models [Array<#to_h>] one or more objects which can be converted to hashes
-    # @raise [ItemAlreadyExistsError] raised when the item already exists
+    # @raise [App::CustomErrors::ItemAlreadyExistsError] raised when the item already exists
     # @return [Array<Hash>] returns the models inserted successfully
     def insert(models)
       existing_models = find_all_by_name_and_key(models)
