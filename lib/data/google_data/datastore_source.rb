@@ -86,7 +86,13 @@ module Data
       # @param entities [Array<Hash>] one or more objects to update.
       # @return [Array<Hash>] returns the entities updated successfully
       def update(entities)
-        value = @data_store.update(@data_source_parser.hashes_to_entities(entities))
+        begin
+          value = @data_store.update(@data_source_parser.hashes_to_entities(entities))
+        rescue Google::Cloud::NotFoundError => e
+          App::AppLogger.instance.warn("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
+          raise App::CustomErrors::ItemDoesNotExistError
+        end
+
         @data_source_parser.entities_to_hashes(value)
       end
 

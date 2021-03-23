@@ -23,10 +23,26 @@ module GameToken
     # @return [Array<Hash>] returns the models inserted successfully
     def insert(models)
       existing_models = find_all_by_name_and_key(models)
-      
-      raise App::CustomErrors::ItemAlreadyExistsError, 'Game Token already exists and cannot be inserted.' unless existing_models.blank?
 
-      @data_source.insert(convert_models_to_hashes(models)) if existing_models.blank?
+      unless existing_models.blank?
+        raise App::CustomErrors::ItemAlreadyExistsError, 'Game Token already exists and cannot be inserted.'
+      end
+
+      @data_source.insert(convert_models_to_hashes(models))
+    end
+
+    # Updates models in a data source
+    # - the models must already exist
+    #
+    # @param models [Array<#to_h>] one or more objects which can be converted to hashes
+    # # @raise [App::CustomErrors::ItemDoesNotExistError] raised when the item does not exist
+    # @return [Array<Hash>] returns the models updated successfully
+    def update(models)
+      begin
+        @data_source.update(convert_models_to_hashes(models))
+      rescue App::CustomErrors::ItemDoesNotExistError => e
+        raise App::CustomErrors::ItemDoesNotExistError, 'Game Token does not exist and cannot be updated.'
+      end
     end
 
     def find_all_by_name_and_key(models)
