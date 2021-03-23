@@ -57,6 +57,7 @@ module GameToken
           @game_token_dao.insert([model])
 
         rescue App::CustomErrors::ItemAlreadyExistsError => e
+          App::AppLogger.instance.warn("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
           error!({error: e.message}, 400)
         rescue TypeError => e
           App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
