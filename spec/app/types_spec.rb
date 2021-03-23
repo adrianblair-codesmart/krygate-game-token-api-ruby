@@ -3,4 +3,5 @@
 require 'spec_helper'
 
 describe App::Types do
+
 end
