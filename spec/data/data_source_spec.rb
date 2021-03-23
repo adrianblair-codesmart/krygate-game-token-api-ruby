@@ -17,6 +17,18 @@ describe Data::DataSource do
     end
   end
 
+  context 'when the query_string method is called' do
+    it 'responds to the call' do
+      expect(data_source).to respond_to(:query_string)
+    end
+  end
+
+  context 'when the run method is called' do
+    it 'responds to the call' do
+      expect(data_source).to respond_to(:run)
+    end
+  end
+
   context 'when the insert method is called' do
     it 'responds to the call' do
       expect(data_source).to respond_to(:insert)

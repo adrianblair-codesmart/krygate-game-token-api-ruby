@@ -43,6 +43,17 @@ describe Data::DataContext do
     end
   end
 
+  context 'when the query_string method is called' do
+    it 'calls query_string on the data_source and returns a query_string object' do
+      expect(data_source).to receive(:query_string).and_return(game_token_base_hash)
+
+      return_value = data_context.query_string
+
+      expect(data_context).to respond_to(:query_string)
+      expect(return_value).to equal(game_token_base_hash)
+    end
+  end
+
   context 'when the run method is called' do
     it 'runs the query on the data_source and returns a query result object' do
       expect(data_source).to receive(:run).with(entity_mock).and_return(game_token_base_hash)

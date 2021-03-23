@@ -18,11 +18,11 @@ module GameToken
     # Inserts models into a data source
     # - the models must not already exist
     #
-    # @param models [Array<#to_h>] one or more objects which can be converted to hashes
+    # @param models [Array<App::GameToken::Model>] one or more objects which can be converted to hashes
     # @raise [App::CustomErrors::ItemAlreadyExistsError] raised when the item already exists
     # @return [Array<Hash>] returns the models inserted successfully
     def insert(models)
-      existing_models = find_all_by_name_and_key(models)
+      existing_models = find_all_by_name(models)
 
       unless existing_models.blank?
         raise App::CustomErrors::ItemAlreadyExistsError, 'Game Token already exists and cannot be inserted.'
@@ -34,8 +34,8 @@ module GameToken
     # Updates models in a data source
     # - the models must already exist
     #
-    # @param models [Array<#to_h>] one or more objects which can be converted to hashes
-    # # @raise [App::CustomErrors::ItemDoesNotExistError] raised when the item does not exist
+    # @param models [Array<App::GameToken::Model>] one or more objects which can be converted to hashes
+    # @raise [App::CustomErrors::ItemDoesNotExistError] raised when the item does not exist
     # @return [Array<Hash>] returns the models updated successfully
     def update(models)
       begin
@@ -45,7 +45,11 @@ module GameToken
       end
     end
 
-    def find_all_by_name_and_key(models)
+    # Finds all entities matching the token name of the models arguments
+    #
+    # @param models [Array<App::GameToken::Model>] the game token models being searched for
+    # @return [Array<Hash>] returns any entities found
+    def find_all_by_name(models)
       query_obj = query
 
       models.each { |model| query_obj.where('token_name', '=', model.token_name) }
