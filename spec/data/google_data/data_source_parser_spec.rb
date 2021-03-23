@@ -47,32 +47,28 @@ describe Data::GoogleData::DataSourceParser do
 
   context 'when hashes_to_entities is called with an array of hash objects' do
     it 'calls the hash_to_entity for each hash object' do
-      allow(data_source_parser).to receive(:hash_to_entity)
+      expect(data_source_parser).to receive(:hash_to_entity).exactly(4).with(game_token_full_hash)
       data_source_parser.hashes_to_entities(game_token_full_hash_array)
-
-      expect(data_source_parser).to have_received(:hash_to_entity).exactly(4).with(game_token_full_hash)
     end
 
     it 'calls return an array of objects' do
-      allow(game_token_full_hash_array).to receive(:map).and_return(test_model_array)
+      expect(game_token_full_hash_array).to receive(:map).and_return(test_model_array)
+
       return_value = data_source_parser.hashes_to_entities(game_token_full_hash_array)
 
-      expect(game_token_full_hash_array).to have_received(:map)
       expect(return_value).to be(test_model_array)
     end
   end
 
   context 'when entities_to_hashes is called with an array of entity objects' do
     it 'calls the entity_to_hash for each entity object' do
-
-      allow(data_source_parser).to receive(:entity_to_hash)
+      expect(data_source_parser).to receive(:entity_to_hash).exactly(4).times
       data_source_parser.entities_to_hashes(test_model_array)
-
-      expect(data_source_parser).to have_received(:entity_to_hash).exactly(4).times
     end
 
     it 'calls return an array of objects' do
-      allow(data_source_parser).to receive(:entity_to_hash).and_return(game_token_base_hash)
+      expect(test_model_array).to receive(:map).and_return(game_token_base_hash_array)
+
       return_value = data_source_parser.entities_to_hashes(test_model_array)
 
       expect(return_value).to eql(game_token_base_hash_array)
