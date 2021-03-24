@@ -9,7 +9,7 @@ module App
     # Error class which can be thrown when an item already exists
     #
     class ItemAlreadyExistsError < StandardError
-      def initialize(msg='That item already exists.')
+      def initialize(msg = 'That item already exists.')
         super
       end
     end

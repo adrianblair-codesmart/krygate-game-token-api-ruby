@@ -9,7 +9,7 @@ module App
     # Error class which can be thrown when an item does not exist
     #
     class ItemDoesNotExistError < StandardError
-      def initialize(msg='That item does not exist.')
+      def initialize(msg = 'That item does not exist.')
         super
       end
     end

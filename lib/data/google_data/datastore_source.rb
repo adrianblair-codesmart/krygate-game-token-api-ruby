@@ -111,10 +111,11 @@ module Data
       # Deletes entities from a data store
       # - the entities themselves can be passed or just the keys of the entities
       #
-      # @param entities [Array<Hash>] one or more objects to delete.
+      # @param kinds_and_ids [Array<Hash<String, String>>] an array containing Hash<kind, id>
+      #   (the kind and id of the entities to delete)
       # @return [true] returns true if the entities were deleted successfully
-      def delete(entities)
-        value = @data_store.delete(@data_source_parser.hashes_to_entities(entities))
+      def delete(kinds_and_ids)
+        value = @data_store.delete(@data_source_parser.convert_to_keys(kinds_and_ids))
       end
     end
   end

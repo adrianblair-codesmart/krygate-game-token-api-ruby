@@ -8,6 +8,13 @@ describe Data::GoogleData::DatastoreSource do
   let(:test_hash_array) { create_game_token_full_hash_array }
   let(:game_token_full_hash) { build(:game_token_full_hash) }
   let(:game_token_base_hash) { build(:game_token_base_hash) }
+
+
+
+  let(:kind_and_key_hash) { build(:kind_and_key_hash) }
+  let(:kind_and_key_hash_array) { build(:kind_and_key_hash_array) }
+  let(:google_key) { build(:google_key) }
+  let(:google_key_array) { build(:google_key_array) }
   let(:entity_mock) { create_entity_mock(game_token_base_hash, game_token_full_hash) }
   let(:test_id) { game_token_full_hash[game_token_full_hash[:ds_identifier]] }
   let(:test_kind) { game_token_full_hash[:ds_kind] }
@@ -16,13 +23,20 @@ describe Data::GoogleData::DatastoreSource do
 
   let(:data_source_parser) do
     create_data_source_parser_mock(
-        entity_mock: entity_mock,
-        test_model_array: test_model_array,
-        game_token_base_hash: game_token_base_hash,
-        test_hash_array: test_hash_array)
+      entity_mock: entity_mock,
+      test_model_array: test_model_array,
+      game_token_base_hash: game_token_base_hash,
+      test_hash_array: test_hash_array,
+      kind_and_key_hash: kind_and_key_hash,
+      kind_and_key_hash_array: kind_and_key_hash_array,
+      google_key: google_key,
+      google_key_array: google_key_array
+    )
   end
 
-  let(:data_source) { Data::GoogleData::DatastoreSource.new(data_store: data_store_mock, data_source_parser: data_source_parser) }
+  let(:data_source) do
+    Data::GoogleData::DatastoreSource.new(data_store: data_store_mock, data_source_parser: data_source_parser)
+  end
 
   before(:each) do
     mock_logger
@@ -141,14 +155,17 @@ describe Data::GoogleData::DatastoreSource do
 
   context 'when the delete method is called' do
     context 'with a valid model array' do
-    it 'deletes and returns true' do
-      expect(data_store_mock).to receive(:delete).with(test_model_array).and_return(true)
+      it 'deletes and returns true' do
+        #TODO need it to receive the converted keys
 
-      return_value = data_source.delete(test_hash_array)
 
-      expect(data_source).to respond_to(:delete)
-      expect(return_value).to equal(true)
-    end
+        expect(data_store_mock).to receive(:delete).with(google_key_array).and_return(true)
+
+        return_value = data_source.delete(kind_and_key_hash_array)
+
+        expect(data_source).to respond_to(:delete)
+        expect(return_value).to equal(true)
+      end
     end
   end
 end

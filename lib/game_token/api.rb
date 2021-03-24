@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'grape'
 require 'securerandom'
 require 'byebug'
-
 
 # Namespace for game token related modules and classes
 # @author Adrian Blair
@@ -27,14 +28,11 @@ module GameToken
       # get {prefix}/game_tokens/ @returns [Array<GameToken::Model>] as json
       desc 'Get all the available game tokens.'
       get do
-        begin
-          query = @game_token_dao.query
-          @game_token_dao.run query
-        rescue StandardError => e
-          App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
-          error!({error: 'An unexpected error occurred.'}, 500)
-        end
-
+        query = @game_token_dao.query
+        @game_token_dao.run query
+      rescue StandardError => e
+        App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
+        error!({ error: 'An unexpected error occurred.' }, 500)
       end
 
       # post {prefix}/game_tokens @returns [Array<GameToken::Model>] as json
@@ -44,28 +42,25 @@ module GameToken
         optional :token_domains, type: Array[String], default: []
       end
       post do
-        begin
-          contract = NewGameTokenContract.new
-          result = contract.call(params)
+        contract = NewGameTokenContract.new
+        result = contract.call(params)
 
-          error!({errors: result.errors.to_h}, 400) if (result.errors.count > 0)
+        error!({ errors: result.errors.to_h }, 400) if result.errors.count.positive?
 
-          game_token_hash = result.to_h
-          game_token_hash[:id] = SecureRandom.uuid
-          model = GameToken::Model.new(game_token_hash)
+        game_token_hash = result.to_h
+        game_token_hash[:id] = SecureRandom.uuid
+        model = GameToken::Model.new(game_token_hash)
 
-          @game_token_dao.insert([model])
-
-        rescue App::CustomErrors::ItemAlreadyExistsError => e
-          App::AppLogger.instance.warn("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
-          error!({error: e.message}, 400)
-        rescue TypeError => e
-          App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
-          error!({error: e.message}, 400)
-        rescue StandardError => e
-          App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
-          error!({error: 'An unexpected error occurred.'}, 500)
-        end
+        @game_token_dao.insert([model])
+      rescue App::CustomErrors::ItemAlreadyExistsError => e
+        App::AppLogger.instance.warn("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
+        error!({ error: e.message }, 400)
+      rescue TypeError => e
+        App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
+        error!({ error: e.message }, 400)
+      rescue StandardError => e
+        App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
+        error!({ error: 'An unexpected error occurred.' }, 500)
       end
 
       route_param :id, type: String do
@@ -74,14 +69,12 @@ module GameToken
         params do
         end
         get do
-          begin
-            item = @game_token_dao.find(params[:id])
-            error! "resource with id: #{params[:id]} could not be found.", 404 if item.blank?
-            item
-          rescue StandardError => e
-            App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
-            error!({error: 'An unexpected error occurred.'}, 500)
-          end
+          item = @game_token_dao.find(params[:id])
+          error! "resource with id: #{params[:id]} could not be found.", 404 if item.blank?
+          item
+        rescue StandardError => e
+          App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
+          error!({ error: 'An unexpected error occurred.' }, 500)
         end
 
         # put {prefix}/game_tokens/:id @returns [Array<GameToken::Model>] as json
@@ -91,29 +84,26 @@ module GameToken
           optional :token_domains, type: Array[String], default: []
         end
         put do
-          begin
-            contract = ExistingGameTokenContract.new
-            result = contract.call(params)
+          contract = ExistingGameTokenContract.new
+          result = contract.call(params)
 
-            error!({errors: result.errors.to_h}, 400) if (result.errors.count > 0)
+          error!({ errors: result.errors.to_h }, 400) if result.errors.count.positive?
 
-            game_token_hash = result.to_h
-            model = GameToken::Model.new(game_token_hash)
+          game_token_hash = result.to_h
+          model = GameToken::Model.new(game_token_hash)
 
-            @game_token_dao.update([model])
-
-          rescue App::CustomErrors::ItemDoesNotExistError => e
-            # TODO create an error formatter which take e and outputs it as follows.
-            # TODO maybe create a base exception class which is auto logged as follows.
-            App::AppLogger.instance.warn("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
-            error!({error: e.message}, 400)
-          rescue TypeError => e
-            App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
-            error!({error: e.message}, 400)
-          rescue StandardError => e
-            App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
-            error!({error: 'An unexpected error occurred.'}, 500)
-          end
+          @game_token_dao.update([model])
+        rescue App::CustomErrors::ItemDoesNotExistError => e
+          # TODO: create an error formatter which take e and outputs it as follows.
+          # TODO maybe create a base exception class which is auto logged as follows.
+          App::AppLogger.instance.warn("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
+          error!({ error: e.message }, 400)
+        rescue TypeError => e
+          App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
+          error!({ error: e.message }, 400)
+        rescue StandardError => e
+          App::AppLogger.instance.error("#{e.class}: #{e.message} \n\t#{e.backtrace.join("\n\t")}")
+          error!({ error: 'An unexpected error occurred.' }, 500)
         end
       end
     end

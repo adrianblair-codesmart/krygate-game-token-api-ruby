@@ -31,6 +31,12 @@ module Data
     # @return [Hash] returns the converted entity as a hash
     def entity_to_hash(item); end
 
+    # Converts a hash to a key
+    #
+    # @param item [Hash] hash item to convert
+    # @return [Object] returns the converted hash as a key
+    def convert_to_key(item); end
+
     # Converts an array of hashes to entities
     #
     # @param items [Array<Hash>] an array of hashes to be converted to entities
@@ -47,6 +53,15 @@ module Data
     # @see Data::DataSourceParser#entity_to_hash Data::DataSourceParser#entity_to_hash
     def entities_to_hashes(items)
       items.map { |item| entity_to_hash(item) }
+    end
+
+    # Converts an array of hashes to keys
+    #
+    # @param items [Array<Hash>] an array of hashes to be converted to keys
+    # @return [Array<Object>] returns the converted keys
+    # @see Data::DataSourceParser#convert_to_key Data::DataSourceParser#convert_to_key
+    def convert_to_keys(items)
+      items.map { |item| convert_to_key(item) }
     end
   end
 end

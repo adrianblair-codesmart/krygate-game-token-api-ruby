@@ -85,13 +85,13 @@ module Data
       @data_source.save(convert_models_to_hashes(models))
     end
 
-    # Deletes models from a data source
-    # - the models themselves can be passed or just the keys of the models
+    # Deletes entities matching the kinds and ids from a data source
     #
-    # @param models [Array<#to_h>] one or more objects which can be converted to hashes
+    # @param kinds_and_ids [Array<Hash<String, String>>] an array containing Hash<kind, id>
+    #   the kind and id of the entities to delete
     # @return [true] returns true if the models were deleted successfully
-    def delete(models)
-      @data_source.delete(convert_models_to_hashes(models))
+    def delete(kinds_and_ids)
+      @data_source.delete(kinds_and_ids)
     end
 
     # Convert models to hashes
@@ -99,9 +99,9 @@ module Data
     # @param models [Array<#to_h>] one or more objects which can be converted to hashes
     # @return [Array<Hash>] returns an array of hashes which represent the models
     def convert_models_to_hashes(models)
-        models.map! do |model|
-          convert_model_to_hash(model)
-        end
+      models.map! do |model|
+        convert_model_to_hash(model)
+      end
     end
 
     # Convert model to hash
@@ -111,6 +111,7 @@ module Data
     # @return [Hash] returns a hash which represents the model
     def convert_model_to_hash(model)
       raise TypeError, "#{model.inspect} cannot be converted to a hash." unless model.respond_to? :to_h
+
       model.to_h
     end
   end

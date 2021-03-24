@@ -27,7 +27,7 @@ describe GameToken::NewGameTokenContract do
       expect(contract_result.values.count).to eq(0)
       expect(contract_result.errors.count).to eq(1)
       expect(contract_errors_hash.key?(:token_name)).to be true
-        # expect(contract_errors_hash.key?(:token_key)).to be true
+      # expect(contract_errors_hash.key?(:token_key)).to be true
     end
   end
 end

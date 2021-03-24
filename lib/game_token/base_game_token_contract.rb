@@ -20,9 +20,9 @@ module GameToken
     # registers a macro which causes a failure in validation if blank spaces are found
     # @return [Object] failure
     # @see https://rubydoc.info/gems/dry-validation/Dry/Validation/Failures#failure-instance_method failure-instance_method
-    #register_macro(:no_blank_spaces_format) do
+    # register_macro(:no_blank_spaces_format) do
     #  key.failure('cannot contain any blank spaces') if value.match(' ')
-    #end
+    # end
 
     # registers a macro which causes a failure in validation if duplicated elements are found
     # @return [Object] failure

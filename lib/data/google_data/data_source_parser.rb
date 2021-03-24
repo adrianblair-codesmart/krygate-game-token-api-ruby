@@ -47,6 +47,17 @@ module Data
         item_hash
       end
 
+      # Converts a hash to a key
+      # - this is a specific google datastore key type
+      #
+      # @param item Hash<ds_kind, id> hash item to convert
+      # @return [Array<Google::Cloud::Datastore::Key] returns the converted hash as a key
+      # @see https://googleapis.dev/ruby/google-cloud-datastore/latest/Google/Cloud/Datastore/Key.html Google::Cloud::Datastore::Key
+      # @see Data::Google::DatastoreSource#convert_to_key Data::Google::DatastoreSource#convert_to_key
+      def convert_to_key(item)
+        Google::Cloud::Datastore::Key item[:kind], item[:id]
+      end
+
       # Converts an array of hashes to entities
       # - this is a specific google datastore entity type
       #
@@ -66,6 +77,17 @@ module Data
       # @see https://googleapis.dev/ruby/google-cloud-datastore/latest/Google/Cloud/Datastore/Entity.html Google::Cloud::Datastore::Entity
       # @see Data::Google::DatastoreSource#entity_to_hash Data::Google::DatastoreSource#entity_to_hash
       def entities_to_hashes(items)
+        items.map { |item| entity_to_hash(item) }
+      end
+
+      # Converts an array of hashes to an array of keys
+      # - this is a specific google datastore key type
+      #
+      # @param items [Array<Hash<String, String>>] an array containing Hash<ds_kind, id>
+      # @return [Array<Google::Cloud::Datastore::Key>] returns the converted hash as a key
+      # @see https://googleapis.dev/ruby/google-cloud-datastore/latest/Google/Cloud/Datastore/Key.html Google::Cloud::Datastore::Key
+      # @see Data::Google::DatastoreSource#convert_to_key Data::Google::DatastoreSource#convert_to_key
+      def convert_to_keys(items)
         items.map { |item| entity_to_hash(item) }
       end
     end

@@ -16,9 +16,9 @@ describe GameToken::Model do
       expect do
         GameToken::Model.new(
           ds_kind: nil,
-          id: "token_id",
+          id: 'token_id',
           token_name: "token's name",
-          #token_key: "token_key",
+          # token_key: "token_key",
           token_domains: ['localhost']
         )
       end.to raise_error(Dry::Struct::Error)
@@ -30,7 +30,7 @@ describe GameToken::Model do
       test_model = GameToken::Model.new(
         ds_kind: 'TestKind',
         token_name: "token's name",
-        #token_key: "token_key",
+        # token_key: "token_key",
         token_domains: ['localhost']
       )
 
@@ -38,7 +38,7 @@ describe GameToken::Model do
     end
 
     it 'returns the current id' do
-      expect(model.id).to eql("token_id")
+      expect(model.id).to eql('token_id')
     end
   end
 
@@ -47,9 +47,9 @@ describe GameToken::Model do
       expect do
         GameToken::Model.new(
           ds_kind: 'TestKind',
-          id: "token_id",
+          id: 'token_id',
           token_name: nil,
-          #token_key: "token_key",
+          # token_key: "token_key",
           token_domains: ['localhost']
         )
       end.to raise_error(Dry::Struct::Error)
@@ -59,8 +59,8 @@ describe GameToken::Model do
       expect do
         GameToken::Model.new(
           ds_kind: 'TestKind',
-          id: "token_id",
-          #token_key: "token_key",
+          id: 'token_id',
+          # token_key: "token_key",
           token_domains: ['localhost']
         )
       end.to raise_error(Dry::Struct::Error)
@@ -71,43 +71,14 @@ describe GameToken::Model do
     end
   end
 
-  # context 'when the model has a token key attribute' do
-  #   it 'throws a Dry::Struct::Error if the value is invalid' do
-  #     expect do
-  #       GameToken::Model.new(
-  #         ds_kind: 'TestKind',
-  #         id: "token_id",
-  #         token_name: "token's name",
-  #         #token_key: nil,
-  #         token_domains: ['localhost']
-  #       )
-  #     end.to raise_error(Dry::Struct::Error)
-  #   end
-  #
-  #   it 'throws a Dry::Struct::Error if the value is  missing' do
-  #     expect do
-  #       GameToken::Model.new(
-  #         ds_kind: 'TestKind',
-  #         id: "token_id",
-  #         token_name: "token's name",
-  #         token_domains: ['localhost']
-  #       )
-  #     end.to raise_error(Dry::Struct::Error)
-  #   end
-  #
-  #   it 'returns the current token key' do
-  #     expect(model.token_key).to eql("token_key")
-  #   end
-  # end
-
   context 'when the model has a token domains attribute' do
     it 'throws a Dry::Struct::Error if the value is invalid' do
       expect do
         GameToken::Model.new(
           ds_kind: 'TestKind',
-          id: "token_id",
+          id: 'token_id',
           token_name: "token's name",
-          #token_key: "token_key",
+          # token_key: "token_key",
           token_domains: nil
         )
       end.to raise_error(Dry::Struct::Error)
@@ -117,9 +88,9 @@ describe GameToken::Model do
       expect do
         GameToken::Model.new(
           ds_kind: 'TestKind',
-          id: "token_id",
-          token_name: "token's name",
-        #token_key: "token_key"
+          id: 'token_id',
+          token_name: "token's name"
+          # token_key: "token_key"
         )
       end.to raise_error(Dry::Struct::Error)
     end

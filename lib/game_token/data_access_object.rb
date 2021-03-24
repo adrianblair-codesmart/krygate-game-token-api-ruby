@@ -38,11 +38,9 @@ module GameToken
     # @raise [App::CustomErrors::ItemDoesNotExistError] raised when the item does not exist
     # @return [Array<Hash>] returns the models updated successfully
     def update(models)
-      begin
-        @data_source.update(convert_models_to_hashes(models))
-      rescue App::CustomErrors::ItemDoesNotExistError => e
-        raise App::CustomErrors::ItemDoesNotExistError, 'Game Token does not exist and cannot be updated.'
-      end
+      @data_source.update(convert_models_to_hashes(models))
+    rescue App::CustomErrors::ItemDoesNotExistError => e
+      raise App::CustomErrors::ItemDoesNotExistError, 'Game Token does not exist and cannot be updated.'
     end
 
     # Finds all entities matching the token name of the models arguments

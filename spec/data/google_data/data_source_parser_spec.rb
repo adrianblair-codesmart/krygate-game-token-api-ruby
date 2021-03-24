@@ -13,7 +13,6 @@ describe Data::GoogleData::DataSourceParser do
   let(:game_token_base_hash_array) { create_game_token_base_hash_array }
   let(:game_token_full_hash_array) { create_game_token_full_hash_array }
 
-
   context 'when the data source parser is constructed' do
     it 'should store the data source as an instance variable' do
       expect(data_source_parser).to respond_to(:data_store)

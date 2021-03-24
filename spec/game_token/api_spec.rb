@@ -95,7 +95,7 @@ describe GameToken::Api do
       it 'creates a game token' do
         allow(game_token_dao).to receive(:insert) { game_token_base_hash }
 
-        post '/api/game_tokens/', {token_name: game_token.token_name, token_domains: game_token.token_domains}
+        post '/api/game_tokens/', { token_name: game_token.token_name, token_domains: game_token.token_domains }
         expect(last_response.status).to eq 201
         expect(last_response.body).to eql(game_token_base_hash.to_json)
       end
@@ -114,7 +114,7 @@ describe GameToken::Api do
 
     context 'with an invalid token name' do
       it 'returns an array of errors with a 400 response code' do
-        post '/api/game_tokens/', {token_name: nil}
+        post '/api/game_tokens/', { token_name: nil }
 
         json_response = JSON.parse(last_response.body)
 
@@ -125,7 +125,7 @@ describe GameToken::Api do
 
     context 'with an invalid token domains' do
       it 'returns an array of errors with a 400 response code' do
-        post '/api/game_tokens/', {token_name: game_token.token_name, token_domains: ['bad domain', 'bad domain 2']}
+        post '/api/game_tokens/', { token_name: game_token.token_name, token_domains: ['bad domain', 'bad domain 2'] }
 
         json_response = JSON.parse(last_response.body)
 
@@ -138,7 +138,7 @@ describe GameToken::Api do
       it 'returns an error with a 400 response code' do
         allow(game_token_dao).to receive(:insert).and_raise(App::CustomErrors::ItemAlreadyExistsError)
 
-        post '/api/game_tokens/', {token_name: game_token.token_name}
+        post '/api/game_tokens/', { token_name: game_token.token_name }
 
         json_response = JSON.parse(last_response.body)
 
@@ -152,7 +152,7 @@ describe GameToken::Api do
       it 'returns an error with a 400 response code' do
         allow(game_token_dao).to receive(:insert).and_raise(TypeError, 'type error test exception.')
 
-        post '/api/game_tokens/', {token_name: game_token.token_name}
+        post '/api/game_tokens/', { token_name: game_token.token_name }
 
         json_response = JSON.parse(last_response.body)
 
@@ -166,7 +166,7 @@ describe GameToken::Api do
       it 'returns an error with a 500 response code' do
         allow(game_token_dao).to receive(:insert).and_raise(StandardError, 'type error test exception.')
 
-        post '/api/game_tokens/', {token_name: game_token.token_name}
+        post '/api/game_tokens/', { token_name: game_token.token_name }
 
         json_response = JSON.parse(last_response.body)
 
@@ -183,7 +183,8 @@ describe GameToken::Api do
       it 'updates a game token' do
         allow(game_token_dao).to receive(:update) { game_token_base_hash }
 
-        put "/api/game_tokens/#{game_token_base_hash[:id]}", {token_name: game_token.token_name, token_domains: game_token.token_domains}
+        put "/api/game_tokens/#{game_token_base_hash[:id]}",
+            { token_name: game_token.token_name, token_domains: game_token.token_domains }
         expect(last_response.status).to eq 200
         expect(last_response.body).to eql(game_token_base_hash.to_json)
       end
@@ -202,7 +203,7 @@ describe GameToken::Api do
 
     context 'with an invalid token name' do
       it 'returns an array of errors with a 400 response code' do
-        put "/api/game_tokens/#{game_token_base_hash[:id]}", {token_name: nil}
+        put "/api/game_tokens/#{game_token_base_hash[:id]}", { token_name: nil }
 
         json_response = JSON.parse(last_response.body)
 
@@ -213,7 +214,8 @@ describe GameToken::Api do
 
     context 'with an invalid token domains' do
       it 'returns an array of errors with a 400 response code' do
-        put "/api/game_tokens/#{game_token_base_hash[:id]}", {token_name: game_token.token_name, token_domains: ['bad domain', 'bad domain 2']}
+        put "/api/game_tokens/#{game_token_base_hash[:id]}",
+            { token_name: game_token.token_name, token_domains: ['bad domain', 'bad domain 2'] }
 
         json_response = JSON.parse(last_response.body)
 
@@ -226,7 +228,7 @@ describe GameToken::Api do
       it 'returns an error with a 400 response code' do
         allow(game_token_dao).to receive(:update).and_raise(App::CustomErrors::ItemDoesNotExistError)
 
-        put "/api/game_tokens/#{game_token_base_hash[:id]}", {token_name: game_token.token_name}
+        put "/api/game_tokens/#{game_token_base_hash[:id]}", { token_name: game_token.token_name }
 
         json_response = JSON.parse(last_response.body)
 
@@ -240,7 +242,7 @@ describe GameToken::Api do
       it 'returns an error with a 400 response code' do
         allow(game_token_dao).to receive(:update).and_raise(TypeError, 'type error test exception.')
 
-        put "/api/game_tokens/#{game_token_base_hash[:id]}", {token_name: game_token.token_name}
+        put "/api/game_tokens/#{game_token_base_hash[:id]}", { token_name: game_token.token_name }
 
         json_response = JSON.parse(last_response.body)
 
@@ -254,7 +256,7 @@ describe GameToken::Api do
       it 'returns an error with a 500 response code' do
         allow(game_token_dao).to receive(:update).and_raise(StandardError, 'type error test exception.')
 
-        put "/api/game_tokens/#{game_token_base_hash[:id]}", {token_name: game_token.token_name}
+        put "/api/game_tokens/#{game_token_base_hash[:id]}", { token_name: game_token.token_name }
 
         json_response = JSON.parse(last_response.body)
 
