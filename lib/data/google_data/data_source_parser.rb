@@ -55,7 +55,7 @@ module Data
       # @see https://googleapis.dev/ruby/google-cloud-datastore/latest/Google/Cloud/Datastore/Key.html Google::Cloud::Datastore::Key
       # @see Data::Google::DatastoreSource#convert_to_key Data::Google::DatastoreSource#convert_to_key
       def convert_to_key(item)
-        Google::Cloud::Datastore::Key item[:kind], item[:id]
+        key = data_store.key item[:kind], item[:id]
       end
 
       # Converts an array of hashes to entities
@@ -88,7 +88,7 @@ module Data
       # @see https://googleapis.dev/ruby/google-cloud-datastore/latest/Google/Cloud/Datastore/Key.html Google::Cloud::Datastore::Key
       # @see Data::Google::DatastoreSource#convert_to_key Data::Google::DatastoreSource#convert_to_key
       def convert_to_keys(items)
-        items.map { |item| entity_to_hash(item) }
+        items.map { |item| convert_to_key(item) }
       end
     end
   end

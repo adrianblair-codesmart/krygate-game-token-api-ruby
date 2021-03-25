@@ -232,7 +232,7 @@ describe GameToken::Api do
 
         json_response = JSON.parse(last_response.body)
 
-        expect(last_response.status).to eq 400
+        expect(last_response.status).to eq 404
         expect(json_response).to include('error')
         expect(logger_mock).to have_received(:warn)
       end

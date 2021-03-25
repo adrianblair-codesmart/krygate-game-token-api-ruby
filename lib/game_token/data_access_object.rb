@@ -28,7 +28,7 @@ module GameToken
         raise App::CustomErrors::ItemAlreadyExistsError, 'Game Token already exists and cannot be inserted.'
       end
 
-      @data_source.insert(convert_models_to_hashes(models))
+      super(convert_models_to_hashes(models))
     end
 
     # Updates models in a data source
@@ -38,7 +38,7 @@ module GameToken
     # @raise [App::CustomErrors::ItemDoesNotExistError] raised when the item does not exist
     # @return [Array<Hash>] returns the models updated successfully
     def update(models)
-      @data_source.update(convert_models_to_hashes(models))
+      super(convert_models_to_hashes(models))
     rescue App::CustomErrors::ItemDoesNotExistError => e
       raise App::CustomErrors::ItemDoesNotExistError, 'Game Token does not exist and cannot be updated.'
     end

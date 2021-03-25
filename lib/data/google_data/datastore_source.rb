@@ -115,7 +115,7 @@ module Data
       #   (the kind and id of the entities to delete)
       # @return [true] returns true if the entities were deleted successfully
       def delete(kinds_and_ids)
-        value = @data_store.delete(@data_source_parser.convert_to_keys(kinds_and_ids))
+        @data_store.delete(@data_source_parser.convert_to_keys(kinds_and_ids))
       end
     end
   end

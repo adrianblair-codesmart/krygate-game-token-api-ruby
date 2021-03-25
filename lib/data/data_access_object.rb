@@ -27,7 +27,7 @@ module Data
     # @param id_or_name [String] an identifying key represented as an id or name
     # @return [Object, nil] returns an model Object or nil if not found
     def find(id_or_name = nil)
-      @data_source.find(@data_kind, id_or_name)
+      super(@data_kind, id_or_name)
     end
 
     # Returns a query object for a certain kind from a data source
@@ -37,7 +37,16 @@ module Data
     #
     # @return [Object] the query object acts like a builder object
     def query
-      @data_source.query(@data_kind)
+      super(@data_kind)
+    end
+
+    # Deletes entities matching the kinds and ids from a data source
+    #
+    # @param ids [Array<string>] an array containing ids of items to be deleted
+    # @return [true] returns true if the models were deleted successfully
+    def delete(ids)
+      kinds_and_ids = ids.map { |id| { kind: @data_kind, id: id } }
+      super(kinds_and_ids)
     end
   end
 end
