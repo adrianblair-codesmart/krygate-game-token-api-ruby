@@ -47,4 +47,18 @@ describe Data::DataAccessObject do
       expect(return_value).to equal(query_mock)
     end
   end
+
+  context 'when the delete method is called' do
+    let(:ids) { %w[test_id_1 test_id_2] }
+    let(:expected_kind_and_id_map) { [ { kind: test_kind, id: 'test_id_1' }, { kind: test_kind, id: 'test_id_2' } ] }
+
+    it 'calls delete on the data_source and returns nothing' do
+      expect(data_source).to receive(:delete).with(expected_kind_and_id_map).and_return(true)
+
+      return_value = data_context.delete(ids)
+
+      expect(data_context).to respond_to(:delete)
+      expect(return_value).to be true
+    end
+  end
 end
