@@ -266,4 +266,31 @@ describe GameToken::Api do
       end
     end
   end
+
+  # DELETE specs
+  context 'when the DELETE method is sent to /api/game_tokens/:id' do
+    context 'with valid parameters' do
+      it 'updates a game token' do
+        allow(game_token_dao).to receive(:delete) { }
+
+        delete "/api/game_tokens/#{game_token_base_hash[:id]}"
+
+        expect(last_response.status).to eq 204
+      end
+    end
+
+    context 'when a unexpected error has occurred' do
+      it 'returns an error with a 500 response code' do
+        allow(game_token_dao).to receive(:delete).and_raise(StandardError, 'type error test exception.')
+
+        delete "/api/game_tokens/#{game_token_base_hash[:id]}"
+
+        json_response = JSON.parse(last_response.body)
+
+        expect(last_response.status).to eq 500
+        expect(json_response).to include('error')
+        expect(logger_mock).to have_received(:error)
+      end
+    end
+  end
 end
