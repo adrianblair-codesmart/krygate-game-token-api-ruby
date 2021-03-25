@@ -57,7 +57,7 @@ FactoryBot.define do
 
   factory(:google_key, class: Google::Cloud::Datastore::Key) do
     initialize_with do
-      { kind: 'GameToken', id_or_name: 'abc123' }
+      { kind: 'GameToken', id: 'abc123' }
     end
   end
 

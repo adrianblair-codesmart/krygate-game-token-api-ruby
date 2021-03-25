@@ -12,6 +12,10 @@ describe Data::GoogleData::DataSourceParser do
   let(:test_model_array) { create_game_token_model_array }
   let(:game_token_base_hash_array) { create_game_token_base_hash_array }
   let(:game_token_full_hash_array) { create_game_token_full_hash_array }
+  let(:kind_and_key_hash) { build(:kind_and_key_hash) }
+  let(:kind_and_key_hash_array) { build(:kind_and_key_hash_array) }
+  let(:google_key) { build(:google_key) }
+  let(:google_key_array) { build(:google_key_array) }
 
   context 'when the data source parser is constructed' do
     it 'should store the data source as an instance variable' do
@@ -35,12 +39,23 @@ describe Data::GoogleData::DataSourceParser do
         .and_return(entity_mock)
 
       expect(entity_mock).to receive(:[]=).with(:token_name, game_token_full_hash[:token_name])
-      # expect(entity_mock).to receive(:[]=).with(:token_key, game_token_full_hash[:token_key])
       expect(entity_mock).to receive(:[]=).with(:token_domains, game_token_full_hash[:token_domains])
 
       return_value = data_source_parser.hash_to_entity(game_token_full_hash)
 
       expect(return_value).to be(entity_mock)
+    end
+  end
+
+  context 'when convert_to_key is called with a hash object' do
+    it 'converts the hash to a key' do
+      expect(data_store_mock).to receive(:key)
+                                     .with(kind_and_key_hash[:kind], kind_and_key_hash[:id])
+                                     .and_return(google_key)
+
+      return_value = data_source_parser.convert_to_key(kind_and_key_hash)
+
+      expect(return_value).to be(google_key)
     end
   end
 
@@ -71,6 +86,21 @@ describe Data::GoogleData::DataSourceParser do
       return_value = data_source_parser.entities_to_hashes(test_model_array)
 
       expect(return_value).to eql(game_token_base_hash_array)
+    end
+  end
+
+  context 'when convert_to_keys is called with an array of hash objects' do
+    it 'calls the convert_to_key for each hash object' do
+      expect(data_source_parser).to receive(:convert_to_key).exactly(4).times
+      data_source_parser.convert_to_keys(kind_and_key_hash_array)
+    end
+
+    it 'calls return an array of objects' do
+      expect(kind_and_key_hash_array).to receive(:map).and_return(google_key_array)
+
+      return_value = data_source_parser.convert_to_keys(kind_and_key_hash_array)
+
+      expect(return_value).to be(google_key_array)
     end
   end
 end

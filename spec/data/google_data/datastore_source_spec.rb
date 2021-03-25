@@ -8,9 +8,6 @@ describe Data::GoogleData::DatastoreSource do
   let(:test_hash_array) { create_game_token_full_hash_array }
   let(:game_token_full_hash) { build(:game_token_full_hash) }
   let(:game_token_base_hash) { build(:game_token_base_hash) }
-
-
-
   let(:kind_and_key_hash) { build(:kind_and_key_hash) }
   let(:kind_and_key_hash_array) { build(:kind_and_key_hash_array) }
   let(:google_key) { build(:google_key) }
@@ -156,9 +153,6 @@ describe Data::GoogleData::DatastoreSource do
   context 'when the delete method is called' do
     context 'with a valid model array' do
       it 'deletes and returns true' do
-        #TODO need it to receive the converted keys
-
-
         expect(data_store_mock).to receive(:delete).with(google_key_array).and_return(true)
 
         return_value = data_source.delete(kind_and_key_hash_array)
